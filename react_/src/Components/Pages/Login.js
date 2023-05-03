@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
 
 export default function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState();
     const [showPopup, setShowPopup] = useState(false);
     const handleSubmit = (event) => {
         event.preventDefault(); 
@@ -60,8 +61,8 @@ export default function Login() {
           
         //  </div>
         <div className="relative"> 
-           <div className="flex flex-col justify-center items-center h-screen fixed inset-0 bg-gray-800 bg-opacity-75">
-             <div className=" md:w-1/3  lg:w-1/4 bg-white p-10 rounded-xl shadow-lg">
+           <div className="flex flex-col justify-center items-center h-screen fixed inset-0 bg-gray-900 bg-opacity-75">
+             <div className="sm:w-1/2 md:w-1/4 lg:w-1/5 bg-white p-10 rounded-xl shadow-lg">
                <h1 className="text-3xl font-bold mb-4 text-center">Login</h1>
                <form onSubmit={handleSubmit}>
                  <div className="mb-4">
@@ -75,6 +76,8 @@ export default function Login() {
                        name="username"
                        className="border border-gray-400 p-2 rounded w-full"
                        placeholder="Username"
+                       
+                       onChange={(e) => setUsername(e.target.value)}
                        required
                      /> 
                    </div>
@@ -90,6 +93,8 @@ export default function Login() {
                        name="password"
                        className="border border-gray-400 p-2 rounded w-full"
                        placeholder="Password"
+                        
+                       onChange={(e) => setPassword(e.target.value)}
                        required
                      /> 
                    </div>
@@ -101,15 +106,15 @@ export default function Login() {
                  </div>
                  <button
                    type="submit"
-                   className="bg-gradient-to-r from-cyan-500 py-2 px-4 to-blue-500 cursor-pointer text-white rounded w-full"
+                   className="bg-gradient-to-r from-cyan-500 py-2 px-4 to-blue-600 cursor-pointer text-white rounded w-full"
                  >
                    Login
                  </button>
                  <div className="mt-4 text-center">
                    Not a member?{' '}
-                   <a href="#" className="text-purple-700 underline">
-                     Signup
-                   </a>
+                   <a className="text-purple-700 underline">
+                      <Link to="/signUp">Signup</Link>
+                    </a> 
                  </div>
                </form>
              </div>

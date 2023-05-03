@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
 
 function Signup() {
   const [name, setName] = useState('');
@@ -43,6 +44,7 @@ function Signup() {
               name="name"
               className="border border-gray-400 p-2 rounded w-full"
               value={name}
+              placeholder='Name'
               onChange={handleNameChange}
               required
             />
@@ -57,6 +59,7 @@ function Signup() {
               name="email"
               className="border border-gray-400 p-2 rounded w-full"
               value={email}
+              placeholder='Email'
               onChange={handleEmailChange}
               required
             />
@@ -69,6 +72,7 @@ function Signup() {
               type="password"
               id="password"
               name="password"
+              placeholder='password'
               className="border border-gray-400 p-2 rounded w-full"
               value={password}
               onChange={handlePasswordChange}
@@ -94,15 +98,15 @@ function Signup() {
           </div>
           <button
             type="submit"
-            className="bg-gradient-to-r from-cyan-500 py-2 px-4 to-blue-500 cursor-pointer text-white rounded w-full"
+            className="bg-gradient-to-r from-cyan-500 py-2 px-4 to-blue-600 cursor-pointer text-white rounded w-full"
           >
             Sign Up
           </button>
           <div className="mt-4 text-center">
-            Already a member?{' '}
-            <a href="#" className="text-purple-700 underline">
-              Login
-            </a>
+            Already a member?{' '} 
+            <a className="text-purple-700 underline">
+                <Link to="/login">Login</Link>
+            </a> 
           </div>
         </form>
       </div>
