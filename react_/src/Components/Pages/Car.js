@@ -24,7 +24,6 @@ export default function Car() {
         </div>
 
         <div className="w-full md:w-2/3 py-4 px-6">
-          <h1 className="text-center font-bold text-xl mb-4">Car Details</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.keys(data).map(brand =>
               data[brand].map(model => (
@@ -34,8 +33,8 @@ export default function Car() {
                   brand={brand}
                   model={model.model}
                   price="500"
-                  year="{model.details['Start of production ']}"
-                  fuel="{model.details['Fuel Type ']}"
+                  year="2018"
+                  fuel="Gas"
                 />
               ))
             )}
