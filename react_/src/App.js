@@ -4,8 +4,7 @@ import Footer from './Components/Footer'
 import Rent from './Components/Rent';
 import Navbar from './Components/Navbar'
 import Profile from './Components/Profile';
-import Car from './Components/Pages/Car';
-import Login from './Components/Pages/Login';
+import Car from './Components/Pages/Car'; 
 import Signup from './Components/Pages/SignUp';
 function App() {
   return (
@@ -15,8 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/rent" element={<Rent />} />
         <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/car" element={<Car />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/car" element={<Car />} /> 
         <Route path="/signUp" element={<Signup />} />
       </Routes>
       <Footer />

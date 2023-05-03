@@ -10,6 +10,7 @@ const CarCard = ({ image, title, details }) => {
                 <h2 className="text-xl font-semibold">{title}</h2>
                 <p className="text-gray-600">{details}</p>
             </div> */}
+    
             <div className="max-w-md mx-auto rounded overflow-hidden shadow-lg m-4">
                 <img className="w-full "  width={50} src={`data:image/png;base64,${image}`} alt={title} />
                 <div className="px-6 py-4">
