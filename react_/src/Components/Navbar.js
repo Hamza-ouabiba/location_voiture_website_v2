@@ -11,7 +11,7 @@ export default function Navbar() {
     {name: 'Rent',link: '/rent',button: false},
     {name: 'Car',link: '/car',button: false},
     {name: 'Profile',link: '/profile/ima',button: false},
-    {name: 'Sign in/up',link: '',button: true},
+    {name: 'Sign in/up',link: '/Login',button: true},
   ]
   return (
       <div className='md:px-10 py-7 px-7 flex justify-between items-center bg-black text-white'>

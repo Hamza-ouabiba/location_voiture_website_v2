@@ -3,6 +3,7 @@ import React from 'react';
 import CarCard from '../Cards/CarCard';
 import { RangeInput, BrandSelect, FuelSelect, SearchBox } from '../Cards/SearchCard'
 import data from "../../data/brands_modelsAll.json"
+
 export default function Car() {
   const car = {
     make: 'Tesla',
