@@ -2,6 +2,7 @@ import React from 'react'
 import CarCard from './Cards/CarCard';
 import { useState,useEffect } from 'react';
 import axios from 'axios'
+import Details from './Pages/Details';
 
 function Rent() {
   const [data,setData] = useState([]);
@@ -21,9 +22,8 @@ function Rent() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
              {
                data.map((data,index) => {
-                  console.log(data)
                   return(
-                    <CarCard key={index} image={data.image} title={data.model} details={data.idCar} />
+                    <CarCard key={data.idcar} image={data.image} title={data.model} details={data.idcar} id={data.idcar}/>
                   )
                })
              }

@@ -1,7 +1,11 @@
+import axios from 'axios';
 import React from 'react';
 import { useState, useEffect } from 'react';
-const CarCard = ({ image, title, details }) => {
-    
+import Details from '../Pages/Details';
+import { Link } from 'react-router-dom';
+
+const CarCard = ({ id ,image, title, details }) => {
+
     return (
         <>
             {/* 
@@ -20,9 +24,9 @@ const CarCard = ({ image, title, details }) => {
                     <button className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold py-2 px-4 rounded">
                         Rent Now
                     </button>
-                    <button className="underline ">
+                    <Link className="underline " to={`/details/${id}`}>
                         view details
-                    </button>
+                    </Link>
                 </div>
             </div>
         </>

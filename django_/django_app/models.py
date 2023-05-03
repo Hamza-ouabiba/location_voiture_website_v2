@@ -10,7 +10,7 @@ from django.db import models
 
 class Carburant(models.Model):
     idcarburant = models.AutoField(db_column='idCarburant', primary_key=True)  # Field name made lowercase.
-    nom = models.IntegerField(blank=True, null=True)
+    nom = models.CharField(max_length=254, null=True)
 
     class Meta:
         managed = False

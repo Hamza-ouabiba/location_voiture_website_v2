@@ -5,7 +5,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'Client',views.ClientView, 'client')
-router.register(r'Carburant',views.CarburantView, 'carburant')
+router.register(r'Carburant',views.MarqueView, 'carburant')
 router.register(r'Marque',views.CarburantView, 'marque')
 router.register(r'Reservation',views.ReservationView, 'reservation')
 router.register(r'Super_utilisateur',views.SuperUtilisateurView, 'superUser')
