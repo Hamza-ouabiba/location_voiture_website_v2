@@ -84,9 +84,8 @@ class Voiture(models.Model):
     idcar = models.AutoField(db_column='idCar', primary_key=True)  # Field name made lowercase.
     idmarque = models.ForeignKey(Marque, models.DO_NOTHING, db_column='idMarque', blank=True, null=True)  # Field name made lowercase.
     idcarburant = models.ForeignKey(Carburant, models.DO_NOTHING, db_column='idCarburant', blank=True, null=True)  # Field name made lowercase.
-    image = models.TextField(blank=True, null=True)
+    image = models.BinaryField(blank=True, null=True)
     model = models.CharField(max_length=255, blank=True, null=True)
-
     class Meta:
         managed = False
         db_table = 'voiture'
