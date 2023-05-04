@@ -6,6 +6,7 @@ import Navbar from './Components/Navbar'
 import Profile from './Components/Profile';
 import Car from './Components/Pages/Car';
 import Details from './Components/Pages/Details';
+import './App.css'
 
 function App() {
   return (

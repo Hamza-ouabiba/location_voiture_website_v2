@@ -6,6 +6,7 @@ import TableInfo from './Cards/TableInfo';
 
 export default function Description({image,data}) {
   const [imageSliderIndex, setImageSliderIndex] = useState(0);
+  //this cars array of objects will be replaced with the data retreived from database
   const cars = [
      {url: 'https://www.auto-data.net/images/f65/Audi-100-4A-C4.jpg '},
      {url: 'https://www.auto-data.net/images/f113/Audi-100-4A-C4.jpg'},
@@ -46,7 +47,7 @@ export default function Description({image,data}) {
                 <p className='text-cyan-700 font-bold text-5xl'>{data.price} MAD</p>
             </div>
 
-            <TableInfo />
+            <TableInfo data={data}/>
           </div>
           
     </div>
