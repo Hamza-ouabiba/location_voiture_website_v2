@@ -80,10 +80,18 @@ class Utilisateur(models.Model):
         db_table = 'utilisateur'
 
 
+class Transmission(models.Model):
+        id = models.AutoField(db_column='id', primary_key=True)
+        type = models.CharField(max_length=50,null=True)
+        class Meta:
+            managed = False
+            db_table = 'transmission'
+
 class Voiture(models.Model):
     idcar = models.AutoField(db_column='idCar', primary_key=True)  # Field name made lowercase.
     idmarque = models.ForeignKey(Marque, models.DO_NOTHING, db_column='idMarque', blank=True, null=True)  # Field name made lowercase.
     idcarburant = models.ForeignKey(Carburant, models.DO_NOTHING, db_column='idCarburant', blank=True, null=True)  # Field name made lowercase.
+    idTransmission = models.ForeignKey(Transmission, models.DO_NOTHING, db_column='idTransmission', blank=True, null=True)  # Field name made lowercase.
     image = models.BinaryField(blank=True, null=True)
     model = models.CharField(max_length=255, blank=True, null=True)
     image_links = models.BinaryField(blank=True, null=True)
