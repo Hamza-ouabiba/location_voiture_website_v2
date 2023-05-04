@@ -10,7 +10,7 @@ export default function Description({image,data}) {
 
   useEffect(() => {
       const img = document.querySelector('img');
-
+      setClickImage(true)
   },[imageSliderIndex])
   //this cars array of objects will be replaced with the data retreived from database
   const cars = [
@@ -30,7 +30,7 @@ export default function Description({image,data}) {
                     cars.map((car,index) => {
                         console.log(imageSliderIndex)
                         return(
-                            <img src={car.url} key={index} className={`rounded-sm max-h-51 w-52 mt-5 mx-2 ${clickImage && imageSliderIndex === index ? 'border border-solid border-2 border-cyan-500' : ''}`} onClick={() => setImageSliderIndex(index)} />
+                            <img src={car.url} key={index} className={`rounded-sm max-h-51 w-52 mt-5 mx-2 ${clickImage && imageSliderIndex == index ? ' border-solid border-4 border-cyan-500' : ''}`} onClick={() => setImageSliderIndex(index)} />
                         )
                     })
                   }
