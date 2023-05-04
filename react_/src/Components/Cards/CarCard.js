@@ -17,8 +17,8 @@ const CarCard = ({ id ,image, title, details }) => {
             <div className="max-w-md mx-auto rounded overflow-hidden shadow-lg m-4 bg-white">
                 <img className="h-96 "  src={`data:image/png;base64,${image}`} alt={title} />
                 <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">{title}</div>
-                    <p className="text-gray-700 text-base">{details}</p>
+                    <div className="font-bold text-xl mb-2">{brand}</div>
+                    <p className="text-gray-700 text-base">{model}</p>
                 </div>
                 <div className="px-6 pt-4 pb-2 flex justify-between">
                     <button className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold py-2 px-4 rounded">
