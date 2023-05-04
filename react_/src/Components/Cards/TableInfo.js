@@ -2,8 +2,7 @@ import React from 'react'
 
 export default function TableInfo({data}) {
   return (
-    <div className="flex justify-center">
-    <table className="table-auto bg-gray-100 rounded-lg overflow-hidden shadow-lg my-8">
+    <table className="table-auto bg-gray-100 rounded-lg overflow-hidden shadow-lg my-8 p-11">
         <tbody>
         <tr className="bg-transparent">
             <td className="font-bold pr-2 py-2">Modèle:</td>
@@ -35,7 +34,6 @@ export default function TableInfo({data}) {
         </tr>
         </tbody>
     </table>
-    </div>
 
 
   )
