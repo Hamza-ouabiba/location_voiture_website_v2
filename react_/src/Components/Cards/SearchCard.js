@@ -15,6 +15,7 @@ export function RangeInput() {
             </label>
             <label htmlFor="max-price">Max Price:</label>
             <input
+                className='w-full'
                 type="range"
                 id="max-price"
                 name="max-price"
