@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import axios from 'axios'
@@ -13,7 +12,6 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [token, setToken] = useCookies(['mytoken'])
   let navigate = useNavigate()
-  const [isLogin, setLogin] = useState(true)
 
 
   const [users, setUsers] = useState([]);
@@ -23,47 +21,31 @@ export default function Login() {
       .catch(error => console.error(error));
   }, []);
 
-
-  function checkUser(login, password) {
-
-    return users.find((user) => user.login === login && user.mdp === password);
-  }
-
-  const loginBtn = (event) => {
-    event.preventDefault()
-    if (username.trim().length !== 0 && password.trim().length) {
-
-      const filteredUsers = users.filter(user => user.login === username && user.mdp === password)[0];
-      if (checkUser(username, password)) {
-        setToken('myId', filteredUsers.iduser)
-        console.log('Login ...', filteredUsers.iduser);
-      } else {
-        console.log('user not exist');
-      }
-      navigate(window.Location)
-
-    } else {
-      console.log('Username And Password Are Not Set')
-    }
-  }
-
-  const loginStyle = {
-    backgroundImage: `url(${process.env.PUBLIC_URL + "img/18.jpg"})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    'min-height': '100%',
-    height: '77vh',
-    backgroundPosition: ' center',
-    margin: 0,
-
-  };
   useEffect(() => {
     var user_token = token['mytoken']
     console.log('Login User token is', user_token)
     console.log('Data type', typeof (token['myId']))
 
-
   }, [token])
+
+
+  const loginBtn = (event) => {
+    event.preventDefault();
+
+    if (username && password) {
+      const filteredUsers = users.filter(user => user.login === username && user.mdp === password);
+      if (filteredUsers.length) {
+        setToken('myId', filteredUsers[0].iduser);
+        console.log('Login ...', filteredUsers[0].iduser);
+
+      } else {
+        console.log('User does not exist');
+      }
+      navigate(window.Location);
+    } else {
+      console.log('Username and password are required');
+    }
+  }
 
   return (
     < div className="relative" >
