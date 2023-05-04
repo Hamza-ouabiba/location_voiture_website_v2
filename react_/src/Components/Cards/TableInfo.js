@@ -32,12 +32,12 @@ export default function TableInfo({data,carburant_type,gear_box}) {
     },
   };
   const specs_ = [
-     { icon: faGear, title: 'Gearbox',value: gear_box,color: 'text-red-700'},
+     { icon: faGear, title: 'Gearbox',value: gear_box,color: 'text-cyan-500'},
      { icon: faCalendar, title: 'Start of production',value: data.start_prod,color: 'text-purple-500'},
      { icon: faDoorOpen, title: 'Doors',value: data.doors,color: 'text-yellow-500'},
      { icon: faCarBattery, title: 'Power',value: data.power,color: 'text-red-500'},
-     { icon: faChair, title: 'seats',value: data.seats,color: 'text-red-500'},
-     { icon: faGasPump, title: 'Fuel type',value: carburant_type,color: 'text-red-500'},
+     { icon: faChair, title: 'seats',value: data.seats,color: 'text-green-500'},
+     { icon: faGasPump, title: 'Fuel type',value: carburant_type,color: 'text-blue-500'},
   ]
   return (
         <div className='w-full px-12'>
