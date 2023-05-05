@@ -1,12 +1,36 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import Reservations, { Cars } from '../../data/dataFromDB';
-
+import APISerive from '../../data/ApiService';
+import {useCookies} from 'react-cookie';
+import Modal from 'react-modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 export const ReservationCard = ({price,status,message,date_depart,date_arrive,id}) => {
     const cars = Cars()
     const reservations = Reservations()
+    const [token, setToken] = useCookies(['mytoken'])
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const customStyles = {
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        },
+        content: {
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)',
+          maxWidth: '600px',
+          width: '100%',
+          padding: '20px',
+          borderRadius: '5px',
+        },
+      };
+
     //for each reservation there is a car associated with it : 
     const getImageFromReservation = () => 
     {
@@ -16,7 +40,17 @@ export const ReservationCard = ({price,status,message,date_depart,date_arrive,id
             return filteredCars___[0].image;
     }
 
-    getImageFromReservation()
+    const handleSubmit = () => 
+    {
+        APISerive.DeleteReservation(id,token)
+        .then((response) => {
+            setModalIsOpen(true)
+            setTimeout(() => {
+                window.location.reload()
+            },1000)
+        })
+        .catch((error) => console.log(error))
+    }
     return (
         <>
             <div className="w-full rounded overflow-hidden shadow-lg m-4 bg-white flex justify-between p-4">
@@ -25,14 +59,23 @@ export const ReservationCard = ({price,status,message,date_depart,date_arrive,id
                     <p className="text-gray-700 text-base py-2"><span className='font-bold'>From : </span>  {date_depart} <span className='font-bold'>To : </span>  {date_arrive}</p>
                     <p className="text-gray-700 text-base py-2"><span className='font-bold'>Your message: </span>  {message}</p>
                     <p className={`${status ? 'text-green-500 py-2' : 'text-red-500 py-2'}`}><span className='text-black font-bold'>Status :</span> {`${status ? 'Your reservation is confirmed come over to pick up your fucking car.' : 'Not confirmed yet by the agency.'} `}</p>
-                    <button className='py-4 bg-cyan-500 px-5 rounded-sm mt-3 text-white'>View more</button>
-                </div>
+                    <button className='py-2 px-7 rounded-sm mt-3 text-red-500 border border-red-500 hover:bg-red-500 hover:text-white' onClick={() => handleSubmit()}>Cancel</button>
+                </div> 
                 <div className="h-52 w-52 relative">
                     <div className="h-full w-full object-cover object-center rounded flex flex-col justify-center items-center">
                         <img src={`data:image/png;base64,${getImageFromReservation()}`} className=""/>
                     </div>
                 </div>
             </div>
+
+            {
+                    <Modal isOpen={modalIsOpen} style={customStyles} >
+                        <div className='flex justify-center'>
+                            <FontAwesomeIcon icon={faCheckCircle} className='h-14 text-green-400'/>
+                            <h2 className='font-bold text-2xl flex items-center px-4'>Successfully deleted!</h2>
+                        </div>
+                    </Modal>
+            }
        </>
 
     );
