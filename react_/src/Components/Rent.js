@@ -1,5 +1,5 @@
 import React from 'react'
-import CarCard from './Cards/CarCard';
+import {CarCard} from './Cards/CarCard';
 import { useState,useEffect } from 'react';
 import axios from 'axios'
 import Details from './Pages/Details';

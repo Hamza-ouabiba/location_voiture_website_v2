@@ -14,6 +14,7 @@ export default function Navbar() {
     {name: 'Rent',link: '/rent',button: false},
     {name: 'Car',link: '/car',button: false},
     {name: 'Profile',link: '/profile/ima',button: false},
+    {name: 'My reservations',link: '/myreservations',button: false},
     {name: 'Login',link: window.location,button: true},
   ]
 
@@ -27,7 +28,7 @@ export default function Navbar() {
   return (
     <>
          
-              <div className='md:px-10 py-7 px-7 flex justify-between items-center bg-black text-white'>
+       <div className='md:px-10 py-7 px-7 flex justify-between items-center bg-black text-white'>
           <div className='flex text-2xl cursor-pointer items-center gap-2'>
               <FontAwesomeIcon className='w-7 h-7 text-cyan-600' icon={faCarAlt} />
               <span className='font-semibold'><Link to="/">Location-voiture</Link></span>
@@ -64,7 +65,7 @@ export default function Navbar() {
            }
         </div>
 
-         {showPopup&& <Login/>}
+         {showPopup&& <Login showPopup={showPopup}/>}
     </>
      
   )

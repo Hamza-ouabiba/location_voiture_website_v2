@@ -49,11 +49,26 @@ export function Users() {
     const [data, setData] = useState([]);
     useEffect(() => {
         axios.get('http://localhost:8000/django_app/Utilisateur/')
-            .then(response => setData(response.data))
-            .catch(error => console.error(error));
+      .then(response => {
+            setData(response.data)
+         //get the client credentials :
+      })
+      .catch(error => console.error(error));
     }, [])
 
     return data;
 }
 
 
+export function Clients(){
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:8000/django_app/Client/')
+      .then(response => {
+            setData(response.data)
+         //get the client credentials :
+      })
+      .catch(error => console.error(error));
+    }, [])
+    return data;
+}

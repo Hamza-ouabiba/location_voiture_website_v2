@@ -10,8 +10,9 @@ export default class APISerive {
         }).then(resp => resp.json())
     }
 
-    static InsertArticle(body, token) {
-        return fetch(`http://127.0.0.1:8000/api/articles/`, {
+    static InsertReservation(body, token) {
+        console.log(body)
+        return fetch(`http://localhost:8000/django_app/Reservation/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,7 +54,6 @@ export default class APISerive {
             body: JSON.stringify(body)
         }).then(resp => resp.json())
     }
-
 
 
 }
