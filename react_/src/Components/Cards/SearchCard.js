@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import { FuelTypes, Brands } from '../../data/dataFromDB';
 
 export function RangeInput() {
     const [maxPrice, setMaxPrice] = useState(1000);
@@ -33,7 +34,8 @@ export function BrandSelect() {
     const handleBrandChange = (e) => {
         setSelectedBrand(e.target.value);
     };
-
+    const data = Brands();
+    console.log(data)
     return (
         <div>
             <label className="block text-gray-700 font-bold mt-4 mb-2" htmlFor="brand">
@@ -42,10 +44,9 @@ export function BrandSelect() {
             <select className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="brand" name="brand" value={selectedBrand} onChange={handleBrandChange}>
                 <option value="">Select a brand</option>
-                <option value="Tesla">Tesla</option>
-                <option value="Ford">Ford</option>
-                <option value="Toyota">Toyota</option>
-                <option value="Honda">Honda</option>
+                {data.map((brand) => (
+                    <option key={brand.idMarque} value={brand.nom}>{brand.nom}</option>
+                ))}
             </select>
         </div>
     );
@@ -57,7 +58,8 @@ export function FuelSelect() {
     const handleBrandChange = (e) => {
         setSelectedBrand(e.target.value);
     };
-
+    const fuels = FuelTypes();
+    console.log(fuels)
     return (
         <div>
             <label className="block text-gray-700 font-bold mt-4 mb-2" htmlFor="fuel">
@@ -69,13 +71,14 @@ export function FuelSelect() {
                 name="fuel"
             >
                 <option value="">Select fuel type</option>
-                <option value="electric">Electric</option>
-                <option value="gasoline">Gasoline</option>
-                <option value="hybrid">Hybrid</option>
+                {fuels.map((fuel) => (
+                    <option key={fuel.idCarburant} value={fuel.nom}>{fuel.nom}</option>
+                ))}
             </select>
         </div>
     );
 }
+
 
 export function SearchBox() {
     return (

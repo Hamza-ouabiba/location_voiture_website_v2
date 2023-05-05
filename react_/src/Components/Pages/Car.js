@@ -1,19 +1,19 @@
 
 import React from 'react';
-import CarCard from '../Cards/CarCard';
+import { CarCard1 } from '../Cards/CarCard';
 import { RangeInput, BrandSelect, FuelSelect, SearchBox } from '../Cards/SearchCard'
-import data from "../../data/brands_modelsAll.json"
+import { Cars, Brands, FuelTypes, GearBoxs } from '../../data/dataFromDB';
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 
 export default function Car() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    axios.get('http://localhost:8000/django_app/Voiture/')
-      .then(response => setData(response.data))
-      .catch(error => console.error(error));
-  }, [])
-
+  const cars = Cars()
+  console.log(cars)
+  const brands = Brands()
+  console.log(brands)
+  const fuels = FuelTypes()
+  console.log(fuels)
+  const gears = GearBoxs()
 
   return (
     <>
@@ -32,11 +32,18 @@ export default function Car() {
         <div className="w-full md:w-2/3 py-4 px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {
-              data.map((data, index) => {
-                console.log(data)
+              cars.map((data, index) => {
                 return (
-                  <CarCard
-                   />
+                  <CarCard1
+                    key={index}
+                    image={data.image}
+                    brand={brands.find((b) => b.idmarque == data.idmarque).nom}
+                    model={data.model}
+                    price={data.price}
+                    year={2018}
+                    fuel={fuels.find((b) => b.idcarburant == data.idcarburant).nom}
+                    gearbox={gears.find((b) => b.id == data.idTransmission).type}
+                  />
                 )
               })
             }

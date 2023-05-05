@@ -94,12 +94,11 @@ class Voiture(models.Model):
     idTransmission = models.ForeignKey(Transmission, models.DO_NOTHING, db_column='idTransmission', blank=True, null=True)  # Field name made lowercase.
     image = models.BinaryField(blank=True, null=True)
     model = models.CharField(max_length=255, blank=True, null=True)
-    image_links = models.BinaryField(blank=True, null=True)
-    start_prod = models.TextField(blank=True, null=True)
+    #image_links = models.BinaryField(blank=True, null=True)
+    #start_prod = models.TextField(blank=True, null=True)
     seats = models.IntegerField(blank=True, null=True)
     doors = models.IntegerField(blank=True, null=True)
-    power = models.TextField(blank=True, null=True)
-    gearbox = models.TextField(blank=True, null=True)
+    power = models.TextField(blank=True, null=True) 
     price = models.FloatField(blank=True,null=True)
     
     class Meta:
