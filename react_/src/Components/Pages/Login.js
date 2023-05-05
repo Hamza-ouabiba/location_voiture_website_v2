@@ -14,10 +14,21 @@ export default function Login() {
   let navigate = useNavigate()
 
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]); 
+  const [clients,setClients] = useState([]);
+
   useEffect(() => {
     axios.get('http://localhost:8000/django_app/Utilisateur/')
-      .then(response => setUsers(response.data))
+      .then(response => {
+         setUsers(response.data)
+
+         //get the client credentials :
+
+         axios.get('http://localhost:8000/django_app/Client/')
+         .then((clientData) => setClients(clientData.data))
+         .catch((error) => console.log(error))
+
+      })
       .catch(error => console.error(error));
   }, []);
 
@@ -31,17 +42,13 @@ export default function Login() {
 
   const loginBtn = (event) => {
     event.preventDefault();
-
+    let filterUsers = clients.filter((client) => {
+        return users.some((user) => user.iduser === client.iduser)
+    })
+    setUsers(filterUsers)
+    console.log(users)
     if (username && password) {
-      const filteredUsers = users.filter(user => user.login === username && user.mdp === password);
-      if (filteredUsers.length) {
-        setToken('myId', filteredUsers[0].iduser);
-        console.log('Login ...', filteredUsers[0].iduser);
-
-      } else {
-        console.log('User does not exist');
-      }
-      navigate(window.Location);
+       
     } else {
       console.log('Username and password are required');
     }

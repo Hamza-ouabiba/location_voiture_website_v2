@@ -51,10 +51,10 @@ export default function Details() {
     },[])
 
   return (
-    <div className='mx-14 my-14 pb-5'>
+    <div className='mx-11 my-11 pb-5'>
        <div className='flex justify-between mb-11'>
              <div>
-                <h3 className='text-4xl capitalize font-bold '>{data.model}</h3>
+                <h3 className='text-4xl capitalize font-bold '>Car modal : {data.model}</h3>
                 <span className="block border-t border-gray-300 my-2 w-100"></span>
                 <div className=''>
                    <FontAwesomeIcon className=' text-cyan-500 h-2 mx-3' icon={faDotCircle} />

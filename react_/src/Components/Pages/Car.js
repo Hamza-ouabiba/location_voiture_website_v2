@@ -36,21 +36,10 @@ export default function Car() {
                 console.log(data)
                 return (
                   <CarCard
-                    key={index}
-                    image={data.image}
-                    brand={data.idmarque}
-                    model={data.model}
-                    price={data.price}
-                    year={2018}
-                    fuel={data.idcarburant} />
+                   />
                 )
               })
             }
-
-
-
-
-
 
           </div>
         </div>
