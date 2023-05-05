@@ -47,7 +47,7 @@ export const ReservationCard = ({price,status,message,date_depart,date_arrive,id
         .then((response) => {
             setModalIsOpen(true)
             setTimeout(() => {
-                
+                window.location.reload()
             },1000)
         })
         .catch((error) => console.log(error))
