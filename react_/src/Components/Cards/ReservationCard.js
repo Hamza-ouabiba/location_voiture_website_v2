@@ -7,6 +7,7 @@ import {useCookies} from 'react-cookie';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+Modal.setAppElement('#root');
 export const ReservationCard = ({price,status,message,date_depart,date_arrive,id}) => {
     const cars = Cars()
     const reservations = Reservations()
@@ -46,7 +47,7 @@ export const ReservationCard = ({price,status,message,date_depart,date_arrive,id
         .then((response) => {
             setModalIsOpen(true)
             setTimeout(() => {
-                window.location.reload()
+                
             },1000)
         })
         .catch((error) => console.log(error))
@@ -69,7 +70,7 @@ export const ReservationCard = ({price,status,message,date_depart,date_arrive,id
             </div>
 
             {
-                    <Modal isOpen={modalIsOpen} style={customStyles} >
+                    <Modal isOpen={modalIsOpen} style={customStyles}>
                         <div className='flex justify-center'>
                             <FontAwesomeIcon icon={faCheckCircle} className='h-14 text-green-400'/>
                             <h2 className='font-bold text-2xl flex items-center px-4'>Successfully deleted!</h2>

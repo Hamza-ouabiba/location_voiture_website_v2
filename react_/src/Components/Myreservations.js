@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ReservationCard } from './Cards/ReservationCard'
 import { useCookies } from 'react-cookie';
 import Reservations from '../data/dataFromDB';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Myreservations() {
     const [token, setToken] = useCookies(['mytoken'])
     const reservations = Reservations(token)
+    const [error,setError] = useState(false)
+    useEffect(() => {
+        if(reservations.length == 0)
+             setError(true)
+        else setError(false)
+    },[reservations.length])
   return (
     <>
         <h1 className='text-4xl p-11 underline'>Mes reservations</h1>
@@ -26,6 +33,7 @@ export default function Myreservations() {
                 })
             }
         </div>
+        { error == true && <div className='font-bold text-red-500 text-center'>No reservations registered try to rent a car </div>}
     </>
   )
 }
