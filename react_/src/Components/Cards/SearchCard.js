@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { FuelTypes, Brands } from '../../data/dataFromDB';
 
-export function RangeInput() {
-    const [maxPrice, setMaxPrice] = useState(1000);
-
-
+export function RangeInput(props) {
+    const [maxPrice, setMaxPrice] = useState(props.maxPrice);
+    console.log(props.maxPrice)
     const handleMaxChange = (e) => {
-        setMaxPrice(parseInt(e.target.value));
+        const newMaxPrice = parseInt(e.target.value);
+        setMaxPrice(newMaxPrice);
+        props.onMaxPriceChange(newMaxPrice);
     };
 
     return (
@@ -20,7 +21,7 @@ export function RangeInput() {
                 type="range"
                 id="max-price"
                 name="max-price"
-                max="1000"
+                max = {5000}
                 value={maxPrice}
                 onChange={handleMaxChange}
             />
@@ -28,14 +29,18 @@ export function RangeInput() {
         </div>
     );
 }
-export function BrandSelect() {
-    const [selectedBrand, setSelectedBrand] = useState('');
+export function BrandSelect(props) {
+    const [selectedBrand, setSelectedBrand] = useState(null);
 
     const handleBrandChange = (e) => {
-        setSelectedBrand(e.target.value);
+        const brandId = parseInt(e.target.options[e.target.selectedIndex].id);
+        const brandName = e.target.value;
+        setSelectedBrand(brandName);
+        props.onBrandChange(brandId);
     };
+
     const data = Brands();
-    console.log(data)
+
     return (
         <div>
             <label className="block text-gray-700 font-bold mt-4 mb-2" htmlFor="brand">
@@ -44,22 +49,27 @@ export function BrandSelect() {
             <select className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="brand" name="brand" value={selectedBrand} onChange={handleBrandChange}>
                 <option value="">Select a brand</option>
-                {data.map((brand) => (
-                    <option key={brand.idMarque} value={brand.nom}>{brand.nom}</option>
+                {data.sort((a, b) => a.nom.localeCompare(b.nom)).map((brand) => (
+                    <option id={brand.idmarque} value={brand.nom}>{brand.nom}</option>
                 ))}
+
             </select>
         </div>
     );
 }
 
-export function FuelSelect() {
-    const [selectedBrand, setSelectedBrand] = useState('');
+export function FuelSelect(props) {
+    const [selectedFuel, setSelectedFuel] = useState('');
 
-    const handleBrandChange = (e) => {
-        setSelectedBrand(e.target.value);
+    const handleFuelChange = (e) => {
+        const fuelId = parseInt(e.target.options[e.target.selectedIndex].id);
+        const newFuel = e.target.value;
+        setSelectedFuel(newFuel);
+        props.onFuelChange(fuelId);
     };
+
     const fuels = FuelTypes();
-    console.log(fuels)
+
     return (
         <div>
             <label className="block text-gray-700 font-bold mt-4 mb-2" htmlFor="fuel">
@@ -69,10 +79,11 @@ export function FuelSelect() {
                 className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="fuel"
                 name="fuel"
+                onChange={handleFuelChange}
             >
                 <option value="">Select fuel type</option>
                 {fuels.map((fuel) => (
-                    <option key={fuel.idCarburant} value={fuel.nom}>{fuel.nom}</option>
+                    <option id={fuel.idcarburant} value={fuel.nom}>{fuel.nom}</option>
                 ))}
             </select>
         </div>
@@ -80,14 +91,31 @@ export function FuelSelect() {
 }
 
 
-export function SearchBox() {
+export function SearchBox(props) {
+    const [searchValue, setSearchValue] = useState('');
+  
+    const handleSearchChange = (event) => {
+      setSearchValue(event.target.value);
+      props.onSearchChange(event.target.value);
+    };
+  
+    const handleSearchClick = () => { 
+      props.onSearchClick(searchValue);
+    };
     return (
         <div className="flex ">
-            <input type="text" className="border border-gray-400 w-full py-2 px-4 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Search" />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-r-md focus:outline-none focus:shadow-outline" type="submit">
+            <input type="text" 
+                className="border border-gray-400 w-full py-2 px-4 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-600" 
+                onChange={handleSearchChange}
+                value={searchValue}
+                placeholder="Search" />
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-r-md focus:outline-none focus:shadow-outline"
+            onClick={handleSearchClick}>
                 Search
             </button>
         </div>
 
     );
 }
+ 
+ 
