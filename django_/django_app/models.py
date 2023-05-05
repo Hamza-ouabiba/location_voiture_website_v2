@@ -13,7 +13,7 @@ class Carburant(models.Model):
     nom = models.CharField(max_length=254, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'carburant'
 
 
@@ -34,7 +34,7 @@ class Client(models.Model):
     voitures = models.ManyToManyField('Voiture', through='Reservation')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'client'
 
 class Marque(models.Model):
@@ -43,7 +43,7 @@ class Marque(models.Model):
     nom = models.CharField(max_length=254, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'marque'
 
 
@@ -53,7 +53,7 @@ class SuperUtilisateur(models.Model):
     admin = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'super_utilisateur'
 
 
@@ -65,7 +65,7 @@ class Utilisateur(models.Model):
     mdp = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'utilisateur'
 
 
@@ -73,7 +73,7 @@ class Transmission(models.Model):
         id = models.AutoField(db_column='id', primary_key=True)
         type = models.CharField(max_length=50,null=True)
         class Meta:
-            managed = False
+            managed = True
             db_table = 'transmission'
 
 class Voiture(models.Model):
@@ -90,7 +90,7 @@ class Voiture(models.Model):
     clients = models.ManyToManyField('Client', through='Reservation')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'voiture'
 
 
@@ -101,7 +101,8 @@ class Reservation(models.Model):
     date_depart = models.DateField(blank=True, null=True)
     date_arr = models.DateField(blank=True, null=True)
     message = models.CharField(max_length=255,blank=True,null=True)
+    status = models.BooleanField(db_column="status",null=True,blank=True)
     class Meta:
-        managed = False
+        managed = True
         db_table = 'reservation'
         unique_together = (('idcar', 'iduser'),)

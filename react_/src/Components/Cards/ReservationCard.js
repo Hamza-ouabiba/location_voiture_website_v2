@@ -13,6 +13,7 @@ export const ReservationCard = ({price,id_res,status,message,date_depart,date_ar
                     <p className="text-gray-700 text-base">{date_depart}</p>
                     <p className="text-gray-700 text-base">{id_res}</p>
                     <p className="text-gray-700 text-base">{message}</p>
+                    <p className="text-gray-700 text-base">{`${status ? 'votre reservation est confirmé vous pouvez récupérer votre voiture' : 'pas encore confirmé par le chef dagence'} `}</p>
                 </div>
                 <div className="px-6 pt-4 pb-2 flex justify-between">
                 </div>

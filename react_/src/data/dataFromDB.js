@@ -73,9 +73,8 @@ export function Clients(){
     return data;
 }
 
-export default function Reservations(iduser,token){
+export default function Reservations(){
     const [data, setData] = useState([]);
-    console.log(iduser)
     useEffect(() => {
         axios.get(`http://localhost:8000/django_app/Reservation/`)
         .then((res) => setData(res.data))

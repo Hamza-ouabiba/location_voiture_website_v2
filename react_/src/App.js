@@ -23,7 +23,7 @@ function App() {
         <Route path="/myreservations/" element={<Myreservations />} />
         <Route path="/signUp" element={<Signup />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
