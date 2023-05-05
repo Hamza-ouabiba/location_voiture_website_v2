@@ -9,7 +9,7 @@ import { faGasPump } from '@fortawesome/free-solid-svg-icons';
 import Specs from './Specs';
 import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal'
-import ReservationCard from './ReservationCard';
+import ReservationForm from './ReservationForm';
 export default function TableInfo({data,carburant_type,gear_box}) {
 
   const [carburant,setCarburant] = useState("");
@@ -43,7 +43,7 @@ export default function TableInfo({data,carburant_type,gear_box}) {
                         }
                 </div>
                 
-                <ReservationCard data={data}/>           
+                <ReservationForm data={data}/>           
                 
         </div>
   )

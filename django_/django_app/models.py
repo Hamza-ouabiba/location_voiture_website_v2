@@ -18,7 +18,7 @@ class Carburant(models.Model):
 
 
 class Client(models.Model):
-    iduser = models.OneToOneField('Utilisateur', models.DO_NOTHING, db_column='idUser', primary_key=True)  # Field name made lowercase.
+    iduser = models.OneToOneField('Utilisateur', models.DO_NOTHING, db_column='idUser', primary_key=True)
     adresse = models.CharField(max_length=254)
     cin = models.CharField(max_length=50)
     photo = models.TextField(blank=True, null=True)
@@ -31,11 +31,11 @@ class Client(models.Model):
     ville = models.CharField(max_length=50, blank=True, null=True)
     tel = models.CharField(max_length=30, blank=True, null=True)
     date_permis = models.DateField(blank=True, null=True)
+    voitures = models.ManyToManyField('Voiture', through='Reservation')
 
     class Meta:
         managed = False
         db_table = 'client'
-
 
 class Marque(models.Model):
     idmarque = models.AutoField(db_column='idMarque', primary_key=True)  # Field name made lowercase.
@@ -46,17 +46,6 @@ class Marque(models.Model):
         managed = False
         db_table = 'marque'
 
-
-class Reservation(models.Model):
-    idcar = models.ForeignKey('Voiture', models.DO_NOTHING, db_column='idCar')  # Field name made lowercase.
-    iduser = models.OneToOneField(Client, models.DO_NOTHING, db_column='idUser', primary_key=True)  # Field name made lowercase. The composite primary key (idUser, idCar) found, that is not supported. The first column is selected.
-    date_depart = models.DateField(blank=True, null=True)
-    date_arr = models.DateField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'reservation'
-        unique_together = (('iduser', 'idcar'),)
 
 
 class SuperUtilisateur(models.Model):
@@ -88,19 +77,31 @@ class Transmission(models.Model):
             db_table = 'transmission'
 
 class Voiture(models.Model):
-    idcar = models.AutoField(db_column='idCar', primary_key=True)  # Field name made lowercase.
-    idmarque = models.ForeignKey(Marque, models.DO_NOTHING, db_column='idMarque', blank=True, null=True)  # Field name made lowercase.
-    idcarburant = models.ForeignKey(Carburant, models.DO_NOTHING, db_column='idCarburant', blank=True, null=True)  # Field name made lowercase.
-    idTransmission = models.ForeignKey(Transmission, models.DO_NOTHING, db_column='idTransmission', blank=True, null=True)  # Field name made lowercase.
+    idcar = models.AutoField(db_column='idCar', primary_key=True)
+    idmarque = models.ForeignKey(Marque, models.DO_NOTHING, db_column='idMarque', blank=True, null=True)
+    idcarburant = models.ForeignKey(Carburant, models.DO_NOTHING, db_column='idCarburant', blank=True, null=True)
+    idTransmission = models.ForeignKey(Transmission, models.DO_NOTHING, db_column='idTransmission', blank=True, null=True)
     image = models.BinaryField(blank=True, null=True)
     model = models.CharField(max_length=255, blank=True, null=True)
-    #image_links = models.BinaryField(blank=True, null=True)
-    #start_prod = models.TextField(blank=True, null=True)
     seats = models.IntegerField(blank=True, null=True)
     doors = models.IntegerField(blank=True, null=True)
     power = models.TextField(blank=True, null=True) 
     price = models.FloatField(blank=True,null=True)
-    
+    clients = models.ManyToManyField('Client', through='Reservation')
+
     class Meta:
         managed = False
         db_table = 'voiture'
+
+
+class Reservation(models.Model):
+    id = models.AutoField(db_column='id_res',primary_key=True)
+    idcar = models.ForeignKey(Voiture,db_column="idCar",on_delete=models.CASCADE)
+    iduser = models.ForeignKey(Client,db_column="idUser",on_delete=models.CASCADE)
+    date_depart = models.DateField(blank=True, null=True)
+    date_arr = models.DateField(blank=True, null=True)
+    message = models.CharField(max_length=255,blank=True,null=True)
+    class Meta:
+        managed = False
+        db_table = 'reservation'
+        unique_together = (('idcar', 'iduser'),)

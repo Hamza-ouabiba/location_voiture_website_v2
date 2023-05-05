@@ -6,6 +6,7 @@ import Navbar from './Components/Navbar'
 import Profile from './Components/Profile';
 import Car from './Components/Pages/Car';
 import Details from './Components/Pages/Details';
+import Myreservations from './Components/Myreservations';
 import './App.css'
 
 import Signup from './Components/Pages/SignUp';
@@ -18,7 +19,8 @@ function App() {
         <Route path="/rent" element={<Rent />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/car" element={<Car />} /> 
-          <Route path="/details/:id" element={<Details />} />
+        <Route path="/details/:id" element={<Details />} />
+        <Route path="/myreservations/" element={<Myreservations />} />
         <Route path="/signUp" element={<Signup />} />
       </Routes>
       <Footer />
