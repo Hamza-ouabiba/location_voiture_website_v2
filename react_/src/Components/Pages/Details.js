@@ -33,7 +33,7 @@ export default function Details() {
         .then((response) => 
             {
               setData(response.data)
-              console.log(response.data.idcarburant)
+              console.log(response.data)
               let id_carburant = response.data.idcarburant
               let id_transmission = response.data.idTransmission
               if(id_carburant != undefined) {
@@ -86,7 +86,6 @@ export default function Details() {
                               <img src={car.url} key={index} className={`rounded-md max-h-51 w-52 mt-5 mx-2 ${clickImage && imageSliderIndex == index ? ' border-solid border-4 border-cyan-500' : ''}`} onClick={() => setImageSliderIndex(index)} />
                           )
                       })
-                     
                     }
                   </div>
               </div>

@@ -63,13 +63,11 @@ export function Users() {
 export function Clients(){
     const [data, setData] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:8000/django_app/Client/')
-      .then(response => {
-            setData(response.data)
-         //get the client credentials :
-      })
+       axios.get('http://localhost:8000/django_app/Client/')
+      .then(response => setData(response.data))
       .catch(error => console.error(error));
     }, [])
+    console.log("getting data")
     return data;
 }
 

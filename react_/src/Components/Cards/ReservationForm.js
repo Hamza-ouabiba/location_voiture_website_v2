@@ -5,7 +5,7 @@ import APISerive from '../../data/ApiService';
 import { useCookies } from 'react-cookie';
 import { useParams } from 'react-router-dom';
 import Reservations from '../../data/dataFromDB';
-
+import axios from 'axios';
 function ReservationForm({data}) {
     const [modalIsOpen,setModalIsOpen] = useState(false);
     const [date_dep,setStartDate] = useState('')
@@ -17,6 +17,8 @@ function ReservationForm({data}) {
     const [errorMessage,setErrorMessage] = useState('')
     const [errorStatus,setErrorStatus] = useState(false)
     const reservations = Reservations()
+    const [priceRese,setPriceRese] = useState(0);
+    const [currentUser,setCurrentUser] = useState('')
     const customStyles = {
         overlay: {
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -24,8 +26,6 @@ function ReservationForm({data}) {
         content: {
           top: '50%',
           left: '50%',
-          right: 'auto',
-          bottom: 'auto',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
           maxWidth: '600px',
@@ -34,7 +34,13 @@ function ReservationForm({data}) {
           borderRadius: '5px',
         },
       };
-    
+    const userFields = [
+        { label: 'Your Email', value: 'email' },
+        { label: 'Your phone number', value: 'tel' },
+        { label: 'Your Driver licence number', value: 'permis' },
+        { label: 'City', value: 'ville' },
+        { label: 'Your address', value: 'adresse' },
+    ];
     const getDatesParsed = (date) =>
     {
         return new Date(date)
@@ -45,6 +51,37 @@ function ReservationForm({data}) {
         return params.id;
     }
 
+    useEffect(() => 
+    {
+        const getClients = () => 
+        {
+            axios.get('http://localhost:8000/django_app/Client/')
+            .then(response => {
+                //filter the users to get the current user : 
+                let client = response.data.filter((client) => client.iduser == token.myId);
+                setCurrentUser(client[0])
+            })
+            .catch(error => console.error(error));
+        }
+        getClients()
+    },[])
+    useEffect(() => {
+        const calculateReservation = () => 
+        {
+            const dateDepart = new Date(date_dep);
+            const dateArriv = new Date(date_arr);
+            let range = dateArriv - dateDepart;
+            let total = (range/86400000) * data.price 
+            setPriceRese(total)
+        }
+        calculateReservation()
+    },[date_arr,date_dep])
+
+
+    // useEffect(() => {
+    //     //get the client credentials when the modal is open : 
+    //     console.log(clients)
+    // },[modalIsOpen])
     const checkReservation = () => 
     {
             const now = new Date();
@@ -106,6 +143,7 @@ function ReservationForm({data}) {
             return true;
         }
     }
+    
 
     const handleSubmit = async (e) => {
        e.preventDefault();
@@ -130,7 +168,7 @@ function ReservationForm({data}) {
        } 
     };
   return (
-    <form className="bg-white shadow-lg rounded-lg px-4 py-6" onSubmit={handleSubmit}>
+    <form className="bg-white shadow-lg rounded-lg px-4 py-6" /*onSubmit={handleSubmit}*/>
         <div className="bg-white shadow-lg rounded-lg px-4 py-6">
         <h1 className="text-xl font-bold mb-4">Reservate now</h1>
         <div className='text-red-500'>
@@ -194,6 +232,30 @@ function ReservationForm({data}) {
                     >
                     Rent now
                 </button>
+
+                {modalIsOpen && 
+                    <Modal isOpen={modalIsOpen} style={customStyles} >
+                        <div className=''>
+                            <h2 className='font-bold text-2xl text-center px-4'>Reservation Information</h2>
+                            <div>
+                                <h2 className='font-bold '>Car Information</h2>
+                                <p className='px-3 text-md pb-3'>Car modal : {data.model}</p>
+                                <p className='px-3'>Reservation price  : <span className=' font-bold text-cyan-500 mt-4'>{priceRese} MAD</span></p>
+                            </div>
+                            <div>
+                                <h3 className='pt-4 pb-4 font-bold'>Your credentials</h3>
+                                {userFields.map((field, index) => (
+                                    <div key={index}>
+                                        <p className=' text-md px-3'>{field.label} :</p>
+                                        <input type='text' defaultValue={currentUser[field.value]} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <button className='py-2 bg-red-500 px-7 my-4 ' onClick={() => setModalIsOpen(false)}>Close</button>
+                    </Modal>
+                }
+
          </div>
     </form>
   );
