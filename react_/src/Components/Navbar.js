@@ -7,11 +7,14 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Login from './Pages/Login';
 import Signup from './Pages/SignUp';
 import { useCookies } from 'react-cookie';
-import { useEffect } from 'react';
+import { useEffect,useContext } from 'react';
+import AuthContext from './AuthContext';
 
 export default function Navbar() {
   const [navb,setNav] = useState(false);
-  const [token, setToken] = useCookies(['mytoken'])
+  const [token, setToken,removeCookie] = useCookies(['mytoken'])
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
 
   let links = [
     {name: 'Home',link: '/',button: false},
@@ -19,7 +22,7 @@ export default function Navbar() {
     {name: 'Car',link: '/car',button: false},
     {name: 'Profile',link: '/profile/ima',button: false},
     {name: 'My reservations',link: '/myreservations',button: false},
-    {name: 'Login',link: window.location,button: true},
+    {name: isLoggedIn ? "Logout" : "Login" ,link: window.location,button: true},
   ]
 
   const [showPopup, setShowPopup] = useState(false);
@@ -37,6 +40,12 @@ export default function Navbar() {
   
     }, [token])
 
+    const handleLogout = () =>
+    {
+      removeCookie('mytoken');
+      setIsLoggedIn(false)
+      console.log("token removed")
+    }
   return (
     <>
          
@@ -51,7 +60,7 @@ export default function Navbar() {
                 links.map((item,index) => {
                     return(
                       <li key={index} className='font-medium my-7 md:my-0 md:ml-8 text-gray-500 hover:scale-105 duration-200'>
-                         <Link  to={item.link} className={` ${item.button == true ? "bg-gradient-to-r from-cyan-500 py-2 px-4 to-blue-500 cursor-pointer text-white rounded" : ""} `}  onClick={item.button == true ?() => setShowPopup(true) :""} >{item.name}</Link>
+                         <Link  to={item.link} className={` ${item.button == true ? "bg-gradient-to-r from-cyan-500 py-2 px-4 to-blue-500 cursor-pointer text-white rounded" : ""} `}  onClick={item.button == true ?() => {isLoggedIn ? handleLogout() : setShowPopup(true)} :""} >{item.name}</Link>
                       </li>
                     )
                 })

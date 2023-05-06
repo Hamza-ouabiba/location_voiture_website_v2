@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react';
+import { useState, useEffect ,useContext} from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import ApiService from '../../data/ApiService';
 import { Clients, Users } from '../../data/dataFromDB'
 import { ReactDOM } from 'react';
+import AuthContext from '../AuthContext';
+
 export default function Login({showPopup}) {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const users = Users()
   const clients = Clients()
@@ -38,6 +41,7 @@ export default function Login({showPopup}) {
         setToken('myId', user_valid[0].iduser);
         console.log('Login ...', user_valid[0].iduser);
         console.log("user is valid : ")
+        setIsLoggedIn(true)
 
       } else console.log("login ou mot de passe est erronée ")
     } else {
