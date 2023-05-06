@@ -23,6 +23,7 @@ export default function Myreservations() {
                                 message={reser.message}
                                 status={reser.status}
                                 id = {reser.id}
+                                price={reser.price}
                              />
                         )
                     }

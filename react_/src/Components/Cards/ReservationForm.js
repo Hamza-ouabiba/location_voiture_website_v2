@@ -91,7 +91,7 @@ function ReservationForm({data}) {
             setPriceRese(conf)
         }
         calculateReservation()
-        // console.log(priceRese)
+        console.log(priceRese)
     },[date_arr,date_dep])
 
 
@@ -175,6 +175,7 @@ function ReservationForm({data}) {
 
     const sendReservation = () => 
     {
+        console.log(priceRese)
         APISerive.InsertReservation({iduser: token.myId,idcar: params.id, date_depart: date_dep,date_arr: date_arr,message: message,status:false,price: priceRese},token)
             .then((response) => {
                     if(response.hasOwnProperty('non_field_errors'))

@@ -102,6 +102,7 @@ class Reservation(models.Model):
     date_arr = models.DateField(blank=True, null=True)
     message = models.CharField(max_length=255,blank=True,null=True)
     status = models.BooleanField(db_column="status",null=True,blank=True)
+    price = models.FloatField(db_column="price",null=True,blank=True)
     class Meta:
         managed = True
         db_table = 'reservation'
