@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import Reservations from '../../data/dataFromDB';
 import axios from 'axios';
 function ReservationForm({data}) {
+
     const [modalIsOpen,setModalIsOpen] = useState(false);
     const [date_dep,setStartDate] = useState('')
     const [date_arr,setEndDate] = useState('')
@@ -19,6 +20,7 @@ function ReservationForm({data}) {
     const reservations = Reservations()
     const [priceRese,setPriceRese] = useState(0);
     const [currentUser,setCurrentUser] = useState('')
+
     const customStyles = {
         overlay: {
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -28,7 +30,7 @@ function ReservationForm({data}) {
           left: '50%',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
-          maxWidth: '600px',
+          maxWidth: '700px',
           width: '100%',
           padding: '20px',
           borderRadius: '5px',
@@ -40,6 +42,13 @@ function ReservationForm({data}) {
         { label: 'Your Driver licence number', value: 'permis' },
         { label: 'City', value: 'ville' },
         { label: 'Your address', value: 'adresse' },
+    ];
+
+    const reservationField = [
+        { label: 'Car model', value: data.model },
+        { label: 'Reservation price', value: priceRese },
+        { label: 'Start Date', value: date_dep },
+        { label: 'End date', value: date_arr },
     ];
     const getDatesParsed = (date) =>
     {
@@ -71,10 +80,12 @@ function ReservationForm({data}) {
             const dateDepart = new Date(date_dep);
             const dateArriv = new Date(date_arr);
             let range = dateArriv - dateDepart;
-            let total = (range/86400000) * data.price 
-            setPriceRese(total)
+            let total = (range/86400000) * data.price
+            let conf = total ? total : data.price 
+            setPriceRese(conf)
         }
         calculateReservation()
+        console.log(priceRese)
     },[date_arr,date_dep])
 
 
@@ -148,8 +159,16 @@ function ReservationForm({data}) {
     const handleSubmit = async (e) => {
        e.preventDefault();
        if(checkReservationSameDates()) {
+
             setErrorStatus(false)
-            APISerive.InsertReservation({iduser: token.myId,idcar: params.id, date_depart: date_dep,date_arr: date_arr,message: message,status:false},token)
+            setModalIsOpen(true)
+            
+       } 
+    };
+
+    const sendReservation = () => 
+    {
+        APISerive.InsertReservation({iduser: token.myId,idcar: params.id, date_depart: date_dep,date_arr: date_arr,message: message,status:false,price: priceRese},token)
             .then((response) => {
                     if(response.hasOwnProperty('non_field_errors'))
                     {
@@ -165,10 +184,9 @@ function ReservationForm({data}) {
                     }
             })
             .catch((response) => console.log(response))
-       } 
-    };
+    }
   return (
-    <form className="bg-white shadow-lg rounded-lg px-4 py-6" /*onSubmit={handleSubmit}*/>
+    <form className="bg-white shadow-lg rounded-lg px-4 py-6" onSubmit={handleSubmit}>
         <div className="bg-white shadow-lg rounded-lg px-4 py-6">
         <h1 className="text-xl font-bold mb-4">Reservate now</h1>
         <div className='text-red-500'>
@@ -228,7 +246,7 @@ function ReservationForm({data}) {
                 } */}
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-4 mt-2 rounded-r-md focus:outline-none focus:shadow-outline "
                     type="submit"
-                    onClick={() => setModalIsOpen(true)}
+                    // onClick={() => setModalIsOpen(true)}
                     >
                     Rent now
                 </button>
@@ -239,20 +257,49 @@ function ReservationForm({data}) {
                             <h2 className='font-bold text-2xl text-center px-4'>Reservation Information</h2>
                             <div>
                                 <h2 className='font-bold '>Car Information</h2>
-                                <p className='px-3 text-md pb-3'>Car modal : {data.model}</p>
-                                <p className='px-3'>Reservation price  : <span className=' font-bold text-cyan-500 mt-4'>{priceRese} MAD</span></p>
-                            </div>
+                                    <div className='flex flex-row'>
+                                        <div className='w-1/2'>
+                                            {reservationField.slice(0,userFields.length/2).map((field, index) => (
+                                                <div key={index}>
+                                                    <p className=' text-md px-3'>{field.label} :</p>
+                                                    <input type='text' className='px-4 py-2 border  rounded-sm  focus:ring-blue-500 ' defaultValue={field.value} readOnly={true} />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className='w-1/2'>
+                                            {reservationField.slice(userFields.length/2,userFields.length).map((field, index) => (
+                                                <div key={index}>
+                                                    <p className=' text-md px-3'>{field.label} :</p>
+                                                    <input type='text' className='px-4 py-2 border' defaultValue={field.value}  readOnly={true}/>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                             </div>
                             <div>
                                 <h3 className='pt-4 pb-4 font-bold'>Your credentials</h3>
-                                {userFields.map((field, index) => (
-                                    <div key={index}>
-                                        <p className=' text-md px-3'>{field.label} :</p>
-                                        <input type='text' defaultValue={currentUser[field.value]} />
+                                <div className='flex flex-row'>
+                                    <div className='w-1/2'>
+                                        {userFields.slice(0,userFields.length/2).map((field, index) => (
+                                            <div key={index}>
+                                                <p className=' text-md px-3'>{field.label} :</p>
+                                                <input type='text' className='px-4 py-2 border  rounded-sm  focus:ring-blue-500 ' defaultValue={currentUser[field.value]} readOnly={true} />
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
+                                    <div className='w-1/2'>
+                                        {userFields.slice(Math.ceil(userFields.length/2),userFields.length).map((field, index) => (
+                                            <div key={index}>
+                                                <p className=' text-md px-3'>{field.label} :</p>
+                                                <input type='text' className='px-4 py-2 border' defaultValue={currentUser[field.value]}  readOnly={true}/>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <button className='py-2 bg-red-500 px-7 my-4 ' onClick={() => setModalIsOpen(false)}>Close</button>
+                        <button className='py-2 rounded bg-red-500 px-7 my-4 ' onClick={() => setModalIsOpen(false)}>Close</button>
+                        <button className='py-2 bg-cyan-500 px-7 my-4 mx-2 rounded' onClick={() => sendReservation()}>Sent</button>
                     </Modal>
                 }
 
