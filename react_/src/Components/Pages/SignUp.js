@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
+import APISerive from '../../data/ApiService';
 
 export default function Signup() {
   const [name, setName] = useState('');
@@ -93,6 +94,43 @@ export default function Signup() {
   const handleDrivingLicenseChange = (event) => {
     setDrivingLicense(event.target.files);
   };
+
+
+  const registerClient = () => {
+
+
+    let data = [
+      { nom: name, prenom: lastname, login: login, mdp: password },
+      {
+        iduser: null,
+        adresse: address,
+        cin: cin,
+        photo: "b'cl ent1.jpg'",
+        liste_noire: 0,
+        permis: "12c45",
+        passport: passport,
+        email: email,
+        observation: "Obscation 1",
+        societe: "Compc A",
+        ville: "CitcA",
+        tel: phone,
+        date_permis: "2000-01-01"
+      }
+    ]
+    APISerive.RegisterClient(data)
+      .then((response) => {
+        if (response.hasOwnProperty('non_field_errors')) {
+          if (response.non_field_errors[0] == "The fields idcar, iduser must make a unique set.") {
+
+            console.log(true)
+          }
+        } else {
+          console.log(false)
+        }
+      })
+      .catch((response) => console.log(response))
+  }
+
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col sm:max-w-md md:max-w-3xl mx-auto p-4 w-full mb-5">
@@ -298,6 +336,7 @@ export default function Signup() {
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="submit"
+        onClick={registerClient}
       >
         Submit
       </button>

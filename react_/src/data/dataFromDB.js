@@ -40,3 +40,23 @@ export function GearBoxs() {
 export function Users() {
     return useFetch('http://localhost:8000/django_app/Utilisateur/');
 }
+
+export function Clients() {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:8000/django_app/Client/')
+            .then(response => setData(response.data))
+            .catch(error => console.error(error));
+    }, [])
+    console.log("getting data")
+    return data;
+}
+
+export function Reservations() {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        axios.get(`http://localhost:8000/django_app/Reservation/`)
+            .then((res) => setData(res.data))
+    }, [])
+    return data;
+}
