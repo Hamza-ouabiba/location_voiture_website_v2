@@ -33,7 +33,7 @@ export default function Details() {
         .then((response) => 
             {
               setData(response.data)
-              console.log(response.data)
+              // console.log(response.data)
               let id_carburant = response.data.idcarburant
               let id_transmission = response.data.idTransmission
               if(id_carburant != undefined) {

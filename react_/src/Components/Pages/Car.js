@@ -14,7 +14,6 @@ export default function Car() {
   const fuels = FuelTypes()
   console.log(fuels)
   const gears = GearBoxs()
-
   return (
     <>
       <div className="flex flex-col md:flex-row">

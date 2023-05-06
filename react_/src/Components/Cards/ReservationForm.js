@@ -91,7 +91,7 @@ function ReservationForm({data}) {
             setPriceRese(conf)
         }
         calculateReservation()
-        console.log(priceRese)
+        // console.log(priceRese)
     },[date_arr,date_dep])
 
 
@@ -142,8 +142,9 @@ function ReservationForm({data}) {
                  let dateDepartUser = getDatesParsed(date_dep)
                  let dateArriveUser = getDatesParsed(date_arr)
                  //getting the range between the two dates : 
-                if(reservations[i].idcar === params.id)
+                if(reservations[i].idcar == params.id)
                 {
+                    console.log(reservations[i].idcar)
                     for(let i = dateDepart;i<=dateArrive;i.setDate(i.getDate() + 1)) 
                     {
                         if((i.getDate() == dateDepartUser.getDate() && i.getMonth() == dateDepartUser.getMonth() && i.getFullYear()
@@ -165,7 +166,7 @@ function ReservationForm({data}) {
     const handleSubmit = async (e) => {
        e.preventDefault();
        if(checkReservationSameDates()) {
-
+            console.log("hna")
             setErrorStatus(false)
             setModalIsOpen(true)
             
