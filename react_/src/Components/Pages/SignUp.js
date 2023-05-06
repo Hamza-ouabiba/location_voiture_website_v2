@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-function Signup() {
+export default function Signup() {
   const [name, setName] = useState('');
   const [lastname, setLastName] = useState('');
   const [login, setLogin] = useState('');
@@ -16,6 +16,13 @@ function Signup() {
   const [phone, setPhone] = useState('');
   const [licenseDate, setLicenseDate] = useState('');
   const [terms, setTerms] = useState(false);
+
+
+  //erro message
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // handle form submission here
@@ -27,8 +34,18 @@ function Signup() {
   };
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    const emailInput = event.target.value;
+    const emailRegex = /^\S+@\S+\.\S+$/; // Regular expression for validating email format
+
+    if (!emailRegex.test(emailInput)) {
+      setErrorEmail("Please enter a valid email address.");
+    } else {
+      setErrorEmail(""); // Clear error message if email is valid
+    }
+
+    setEmail(emailInput);
   };
+
 
   const handleLastNameChange = (event) => {
     setLastName(event.target.value);
@@ -40,7 +57,14 @@ function Signup() {
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    if (!regex.test(event.target.value)) {
+      setErrorPassword('Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, and one number');
+    } else {
+      setErrorPassword(null);
+    }
   };
+
 
   const handlePhoneChange = (event) => {
     setPhone(event.target.files);
@@ -70,82 +94,99 @@ function Signup() {
     setDrivingLicense(event.target.files);
   };
 
-
-
   return (
-    <form onSubmit={handleSubmit} className=" flex flex-col  max-w-md mx-auto">
-      <div class="flex flex-row">
-        <div className="mb-4">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:max-w-md md:max-w-3xl mx-auto p-4 w-full mb-5">
+      <div className="flex flex-col md:flex-row justify-between">
+        <div className="mb-4 md:w-1/2 md:pr-2">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="nom">
-            Nom:
+            Name:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="nom"
             type="text"
-            name="nom"
             value={name}
+            placeholder='Name'
             onChange={handleNameChange}
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 md:w-1/2 md:pl-2">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="prenom">
             Last Name:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="prenom"
             type="text"
-            name="lastname"
+            placeholder='Last Name'
             value={lastname}
             onChange={handleLastNameChange}
           />
         </div>
       </div>
-      <div class="flex flex-row">
-        <div className="mb-4">
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2" >
+          Email:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="email"
+          value={email}
+          placeholder='Email'
+          onChange={handleEmailChange}
+        />
+        {errorEmail && (
+          <p className="text-red-500 text-md mt-4">{errorEmail}</p>
+        )}
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2" htmlFor="tel">
+          Phone:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+          type="tel"
+
+          value={phone}
+          placeholder='Phone number'
+          onChange={handlePhoneChange}
+        />
+      </div>
+      <div class="flex flex-col md:flex-row md:justify-between">
+        <div className="mb-4 md:w-1/2 md:pr-2">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="login">
             Login:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="login"
+
             type="text"
-            name="login"
+            placeholder='username'
             value={login}
             onChange={handleLoginChange}
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 md:w-1/2 md:pl-2">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="mdp">
             Password:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="mdp"
+
             type="password"
-            name="mdp"
+            placeholder='password'
             value={password}
             onChange={handlePasswordChange}
           />
+          {errorPassword && (
+            <p className="text-red-500 text-md mt-4">{errorPassword}</p>
+          )}
         </div>
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2" htmlFor="adresse">
-          Adresse:
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="address"
-          type="text"
-          name="adresse"
-          value={address}
-          onChange={handleAdresseChange}
-        />
-      </div>
 
-      <div>
-        <div className="mb-4">
+
+      <div class="flex flex-col md:flex-row md:justify-between">
+        <div className="mb-4 md:w-1/2 md:pr-2">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="cin">
             Cin:
           </label>
@@ -155,22 +196,38 @@ function Signup() {
             type="text"
             name="cin"
             value={cin}
+            placeholder='cin'
             onChange={handleCinChange}
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="photo">
-            Photo:
+        <div className="mb-4 md:w-1/2 md:pl-2">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="adresse">
+            Adresse:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="photo"
-            type="file"
-            name="photo"
-            value={photo}
-            onChange={handlePhotoChange}
+            id="address"
+            type="text"
+            name="adresse"
+            value={address}
+            placeholder='addresse'
+            onChange={handleAdresseChange}
           />
         </div>
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2" htmlFor="photo">
+          Photo:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="photo"
+          type="file"
+          name="photo"
+          value={photo}
+          placeholder='photo'
+          onChange={handlePhotoChange}
+        />
       </div>
       <div>
         <div className="mb-4">
@@ -182,24 +239,12 @@ function Signup() {
             id="drivingLicense"
             type="text"
             name="drivingLicense"
+            placeholder='Driving License'
             value={drivingLicense}
             onChange={handleDrivingLicenseChange}
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
-            Email:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="email"
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleEmailChange}
-          />
-        </div>
       </div>
       <div>
         <div className="mb-4">
@@ -211,23 +256,12 @@ function Signup() {
             id="city"
             type="text"
             name="city"
+            placeholder='city'
             value={city}
             onChange={handleCityChange}
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="tel">
-            Phone:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="tel"
-            type="tel"
-            name="tel"
-            value={phone}
-            onChange={handlePhoneChange}
-          />
-        </div>
+
       </div>
       <div>
 
@@ -271,9 +305,11 @@ function Signup() {
 
 
     </form >
-  );
+
+  )
+
 };
 
-export default Signup;
+
 
 

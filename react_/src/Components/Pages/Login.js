@@ -52,7 +52,7 @@ export default function Login(show) {
     show && <>
       < div className="relative" >
         <div className="flex flex-col justify-center items-center h-screen fixed inset-0 bg-gray-900 bg-opacity-75">
-          <div className="sm:w-1/2 md:w-1/4 lg:w-1/5 bg-white p-10 rounded-xl shadow-lg">
+          <div className="sm:w-1/2 md:w-1/3 lg:w-1/5  bg-white p-10 rounded-xl shadow-lg">
             <h1 className="text-3xl font-bold mb-4 text-center">Login</h1>
             <form >
               <div className="mb-4">
