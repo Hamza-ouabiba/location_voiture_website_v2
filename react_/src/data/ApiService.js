@@ -1,17 +1,10 @@
+import axios from "axios"
 export default class APISerive {
-    static UpdateArticle(article_id, body, token) {
-        return fetch(`http://127.0.0.1:8000/api/articles/${article_id}/`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`
-            },
-            body: JSON.stringify(body)
-        }).then(resp => resp.json())
-    }
 
-    static InsertArticle(body, token) {
-        return fetch(`http://127.0.0.1:8000/api/articles/`, {
+
+    static InsertReservation(body, token) {
+        console.log(body)
+        return fetch(`http://localhost:8000/django_app/Reservation/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,16 +14,13 @@ export default class APISerive {
         }).then(resp => resp.json())
     }
 
-    static DeleteArticle(article_id, token) {
-        return fetch(`http://127.0.0.1:8000/api/articles/${article_id}/`, {
-            method: 'PUT',
+    static DeleteReservation(reservation_id,token) {
+        return axios.delete(`http://localhost:8000/django_app/Reservation/${reservation_id}/`,{
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Token ${token}`
-            }
-        })
+            },
+          })
     }
-
 
     static LoginUser(body) {
         return fetch(`http://localhost:8000/django_app/Utilisateur/`, {
@@ -53,7 +43,6 @@ export default class APISerive {
             body: JSON.stringify(body)
         }).then(resp => resp.json())
     }
-
 
 
 }
