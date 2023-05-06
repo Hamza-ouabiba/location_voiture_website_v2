@@ -31,11 +31,12 @@ export default function Login({showPopup}) {
     })
     console.log(filterUsers)
     if (username && password) {
-      let user_valid = filterUsers.filter((user) => username === user.login && user.mdp === password)
+      //if the user is in black list he can not enter : 
+      let user_valid = filterUsers.filter((user) => username === user.login && user.mdp === password /*&& user.liste_noire == 0*/)
       if(user_valid.length>0) {
         
-        setToken('myId', filterUsers[0].iduser);
-        console.log('Login ...', filterUsers[0].iduser);
+        setToken('myId', user_valid[0].iduser);
+        console.log('Login ...', user_valid[0].iduser);
         console.log("user is valid : ")
 
       } else console.log("login ou mot de passe est erronée ")

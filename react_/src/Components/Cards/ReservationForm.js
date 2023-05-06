@@ -4,7 +4,7 @@ import { useState,useEffect } from 'react';
 import APISerive from '../../data/ApiService';
 import { useCookies } from 'react-cookie';
 import { useParams } from 'react-router-dom';
-import Reservations from '../../data/dataFromDB';
+import Reservations, { Clients } from '../../data/dataFromDB';
 import axios from 'axios';
 function ReservationForm({data}) {
 
@@ -20,17 +20,23 @@ function ReservationForm({data}) {
     const reservations = Reservations()
     const [priceRese,setPriceRese] = useState(0);
     const [currentUser,setCurrentUser] = useState('')
+    const [errorForm,setErrorForm] = useState(false)
+    const [formErrorMessage,setFormmessage] = useState('')
+
 
     const customStyles = {
         overlay: {
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
         },
         content: {
+          fontSize: '1.2rem',
           top: '50%',
           left: '50%',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
           maxWidth: '700px',
+          maxHeight: '500px',
+          height: '500px',
           width: '100%',
           padding: '20px',
           borderRadius: '5px',
@@ -174,12 +180,13 @@ function ReservationForm({data}) {
                     {
                         if(response.non_field_errors[0] == "The fields idcar, iduser must make a unique set.")
                         {
-                            setErrorMessage("you've already make a reservation with this car try to view your reservations section : ")
-                            setErrorStatus(true)
+                            setFormmessage("you've already made a reservation with this car try to view your reservations section : ")
+                            setSuccess(false)
+                            setErrorForm(true)
                         } 
                     } else 
                     {
-                        setErrorStatus(false)
+                        setErrorForm(false)
                         setSuccess(true)
                     }
             })
@@ -229,7 +236,6 @@ function ReservationForm({data}) {
             onChange={(e) => setMessage(e.target.value)}
             required
             />
-            <div className='text-green-600'>{success ? 'Reservation sent to the agency view the my reservations sections in order to track your reservation' : ''}</div>
         </div>
 
                 {/* {modalIsOpen && 
@@ -252,56 +258,64 @@ function ReservationForm({data}) {
                 </button>
 
                 {modalIsOpen && 
-                    <Modal isOpen={modalIsOpen} style={customStyles} >
-                        <div className=''>
-                            <h2 className='font-bold text-2xl text-center px-4'>Reservation Information</h2>
+                    <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={() => setModalIsOpen(false)}>
+                        <div className='flex flex-col justify-between h-full'>
+                        <div>
+                        <h2 className='font-bold text-4xl underline text-cyan-500'>{data.model}</h2>
+                        <div className='text-green-600 mt-5 text-center'>{success ? 'Reservation sent to the agency view the my reservations sections in order to track your reservation' : ''}</div>
+                        <div className='text-red-600 '>{errorForm ? formErrorMessage : ''}</div>
                             <div>
-                                <h2 className='font-bold '>Car Information</h2>
-                                    <div className='flex flex-row'>
-                                        <div className='w-1/2'>
-                                            {reservationField.slice(0,userFields.length/2).map((field, index) => (
-                                                <div key={index}>
-                                                    <p className=' text-md px-3'>{field.label} :</p>
-                                                    <input type='text' className='px-4 py-2 border  rounded-sm  focus:ring-blue-500 ' defaultValue={field.value} readOnly={true} />
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <div className='w-1/2'>
-                                            {reservationField.slice(userFields.length/2,userFields.length).map((field, index) => (
-                                                <div key={index}>
-                                                    <p className=' text-md px-3'>{field.label} :</p>
-                                                    <input type='text' className='px-4 py-2 border' defaultValue={field.value}  readOnly={true}/>
-                                                </div>
-                                            ))}
-                                        </div>
+                            <div className='flex flex-row'>
+                                <div className='w-1/2 p-11 mx-11'>
+                                {reservationField.slice(0,userFields.length/2).map((field, index) => (
+                                    <div key={index} className='mb-4'>
+                                    <p className='text-md '>{field.label}:</p>
+                                    <input type='text' className='px-4 py-2 border rounded-sm focus:ring-blue-500' defaultValue={field.value} readOnly={true} />
                                     </div>
-                             </div>
-                            <div>
-                                <h3 className='pt-4 pb-4 font-bold'>Your credentials</h3>
-                                <div className='flex flex-row'>
-                                    <div className='w-1/2'>
-                                        {userFields.slice(0,userFields.length/2).map((field, index) => (
-                                            <div key={index}>
-                                                <p className=' text-md px-3'>{field.label} :</p>
-                                                <input type='text' className='px-4 py-2 border  rounded-sm  focus:ring-blue-500 ' defaultValue={currentUser[field.value]} readOnly={true} />
-                                            </div>
-                                        ))}
+                                ))}
+                                </div>
+                                <div className='w-1/2 p-8'>
+                                {reservationField.slice(userFields.length/2,userFields.length).map((field, index) => (
+                                    <div key={index} className='mb-4'>
+                                    <p className='text-md '>{field.label}:</p>
+                                    <input type='text' className='px-4 py-2 border rounded-sm focus:ring-blue-500' defaultValue={field.value}  readOnly={true}/>
                                     </div>
-                                    <div className='w-1/2'>
-                                        {userFields.slice(Math.ceil(userFields.length/2),userFields.length).map((field, index) => (
-                                            <div key={index}>
-                                                <p className=' text-md px-3'>{field.label} :</p>
-                                                <input type='text' className='px-4 py-2 border' defaultValue={currentUser[field.value]}  readOnly={true}/>
-                                            </div>
-                                        ))}
-                                    </div>
+                                ))}
                                 </div>
                             </div>
+                            </div>
+                            <div className='pt-4'>
+                            <h3 className='font-bold'>Your credentials</h3>
+                            <div className='flex flex-row'>
+                                <div className='w-1/2 p-8 mx-11'>
+                                {userFields.slice(0,userFields.length/2).map((field, index) => (
+                                    <div key={index} className='mb-4'>
+                                    <p className='text-md '>{field.label}:</p>
+                                    <input type='text' className='px-4 py-2 border rounded-sm focus:ring-blue-500' defaultValue={currentUser[field.value]} readOnly={true} />
+                                    </div>
+                                ))}
+                                </div>
+                                <div className='w-1/2 p-11'>
+                                {userFields.slice(Math.ceil(userFields.length/2),userFields.length).map((field, index) => (
+                                    <div key={index} className='mb-4'>
+                                    <p className='text-md '>{field.label}:</p>
+                                    <input type='text' className='px-4 py-2 border rounded-sm focus:ring-blue-500' defaultValue={currentUser[field.value]}  readOnly={true}/>
+                                    </div>
+                                ))}
+                                </div>
+                            </div>
+                            
+                            </div>
+                            
                         </div>
-                        <button className='py-2 rounded bg-red-500 px-7 my-4 ' onClick={() => setModalIsOpen(false)}>Close</button>
-                        <button className='py-2 bg-cyan-500 px-7 my-4 mx-2 rounded' onClick={() => sendReservation()}>Sent</button>
+                            
+                        <div className='flex justify-end p-4'>
+                            <button className='py-2 px-7 rounded bg-red-500 mr-2' onClick={() => setModalIsOpen(false)}>Close</button>
+                            <button className='py-2 px-7 rounded bg-cyan-500' onClick={() => sendReservation()}>Send</button>
+                        </div>
+                        </div>
                     </Modal>
-                }
+                    }
 
          </div>
     </form>

@@ -54,25 +54,18 @@ export default function Details() {
     <div className='mx-11 my-11 pb-5'>
        <div className='flex justify-between mb-11'>
              <div>
+                   
                 <h3 className='text-4xl capitalize font-bold '>Car modal : {data.model}</h3>
                 <span className="block border-t border-gray-300 my-2 w-100"></span>
                 <div className=''>
-                   <FontAwesomeIcon className=' text-cyan-500 h-2 mx-3' icon={faDotCircle} />
                     <span className='text-gray-500'>{data.gearbox}</span>
                 </div>
              </div>
               <div className='flex'>
                 <div className='bg-blue-500 text-white p-5 mx-2 cursor-pointer'>
-                  <span className='text-3xl font-bold'>{data.price} MAD</span>
-                    <span className='block text-2xl text-gray-300'>par jour</span>
-              </div>
-              <div className='bg-blue-500 text-white p-5 flex items-center cursor-pointer'>
-                      <span className='text-3xl font-bold'>View specs</span>
-                      <Link
-                        className="cursor-pointer font-bold text-white"
-                      >
-                      </Link>
-                  </div>
+                    <span className='text-3xl font-bold'>{data.price} MAD</span>
+                    <span className='block text-2xl text-gray-300'>Per day</span>
+                 </div>
               </div>
              
         </div>

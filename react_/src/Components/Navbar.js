@@ -6,9 +6,13 @@ import React,{ useState } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Login from './Pages/Login';
 import Signup from './Pages/SignUp';
+import { useCookies } from 'react-cookie';
+import { useEffect } from 'react';
 
 export default function Navbar() {
   const [navb,setNav] = useState(false);
+  const [token, setToken] = useCookies(['mytoken'])
+
   let links = [
     {name: 'Home',link: '/',button: false},
     {name: 'Rent',link: '/rent',button: false},
@@ -24,6 +28,14 @@ export default function Navbar() {
        
       setShowPopup(false);
     };
+
+
+    useEffect(() => {
+      var user_token = token['mytoken']
+      console.log('Login navabr', user_token)
+      console.log('Data type', typeof (token['myId']))
+  
+    }, [token])
 
   return (
     <>

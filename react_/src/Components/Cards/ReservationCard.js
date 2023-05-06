@@ -73,7 +73,7 @@ export const ReservationCard = ({price,status,message,date_depart,date_arrive,id
                     <Modal isOpen={modalIsOpen} style={customStyles}>
                         <div className='flex justify-center'>
                             <FontAwesomeIcon icon={faCheckCircle} className='h-14 text-green-400'/>
-                            <h2 className='font-bold text-2xl flex items-center px-4'>Successfully deleted!</h2>
+                            <h2 className=' text-2xl flex items-center px-4'>Successfully deleted!</h2>
                         </div>
                     </Modal>
             }

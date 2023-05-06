@@ -15,7 +15,8 @@ export default function Myreservations() {
     },[reservations.length])
   return (
     <>
-        <h1 className='text-4xl p-11 underline'>Mes reservations</h1>
+        <h1 className='text-4xl p-11 text-center '>My reservations</h1>
+        <span className="block border-t border-gray-300 "></span>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 w-1/2 gap-6 mx-auto'>
             {
                 reservations.map((reser,index) => {
