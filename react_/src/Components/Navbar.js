@@ -22,7 +22,7 @@ export default function Navbar() {
     {name: 'Car',link: '/car',button: false},
     {name: 'Profile',link: '/profile/ima',button: false},
     {name: 'My reservations',link: '/myreservations',button: false},
-    {name: isLoggedIn ? "Logout" : "Login" ,link: window.location,button: true},
+    {name: token.myId ? "Logout" : "Login" ,link: window.location,button: true},
   ]
 
   const [showPopup, setShowPopup] = useState(false);
@@ -35,15 +35,15 @@ export default function Navbar() {
 
     useEffect(() => {
       var user_token = token['mytoken']
-      console.log('Login navabr', user_token)
+      console.log('Login navabr', token.myId)
       console.log('Data type', typeof (token['myId']))
   
     }, [token])
 
     const handleLogout = () =>
     {
-      removeCookie('mytoken');
-      setIsLoggedIn(false)
+      removeCookie('myId');
+      window.location.reload()
       console.log("token removed")
     }
   return (
@@ -60,7 +60,7 @@ export default function Navbar() {
                 links.map((item,index) => {
                     return(
                       <li key={index} className='font-medium my-7 md:my-0 md:ml-8 text-gray-500 hover:scale-105 duration-200'>
-                         <Link  to={item.link} className={` ${item.button == true ? "bg-gradient-to-r from-cyan-500 py-2 px-4 to-blue-500 cursor-pointer text-white rounded" : ""} `}  onClick={item.button == true ?() => {isLoggedIn ? handleLogout() : setShowPopup(true)} :""} >{item.name}</Link>
+                         <Link  to={item.link} className={` ${item.button == true ? "bg-gradient-to-r from-cyan-500 py-2 px-4 to-blue-500 cursor-pointer text-white rounded" : ""} `}  onClick={item.button == true ?() => {token.myId ? handleLogout() : setShowPopup(true)} :""} >{item.name}</Link>
                       </li>
                     )
                 })

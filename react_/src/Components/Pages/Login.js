@@ -20,7 +20,7 @@ export default function Login({showPopup}) {
   let navigate = useNavigate()
 
   useEffect(() => {
-    var user_token = token['mytoken']
+    var user_token = token.myId
     console.log('Login User token is', user_token)
     console.log('Data type', typeof (token['myId']))
 
@@ -41,8 +41,7 @@ export default function Login({showPopup}) {
         setToken('myId', user_valid[0].iduser);
         console.log('Login ...', user_valid[0].iduser);
         console.log("user is valid : ")
-        setIsLoggedIn(true)
-
+        window.location.reload()
       } else console.log("login ou mot de passe est erronée ")
     } else {
       console.log('Username and password are required');
@@ -111,7 +110,6 @@ export default function Login({showPopup}) {
             </div>
             <div className="mt-4 text-center">
               
-              <Link onClick={() => showPopup.setshowPopup(false)}>return</Link>
             </div>
           </form>
         </div>
