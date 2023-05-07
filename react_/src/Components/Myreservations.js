@@ -13,7 +13,6 @@ export default function Myreservations() {
         <h1 className='text-4xl p-11 text-center '>My reservations</h1>
         <span className="block border-t border-gray-300 "></span>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 w-1/2 gap-6 mx-auto'>
-                { reservations.length == 0 ? <div className='font-bold text-red-500 text-center'>No reservations registered try to rent a car </div> : ''}
             { token.myId ? reservations.map((reser,index) => {
                     if(reser.iduser == token.myId) {
                         return(

@@ -18,8 +18,8 @@ export default function Login({showPopup}) {
   const [password, setPassword] = useState('')
   const [token, setToken] = useCookies(['mytoken'])
   let navigate = useNavigate()
-
-  useEffect(() => {
+  console.log(clients)
+  useEffect(() => {   
     var user_token = token.myId
     console.log('Login User token is', user_token)
     console.log('Data type', typeof (token['myId']))

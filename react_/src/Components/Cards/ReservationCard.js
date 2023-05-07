@@ -35,10 +35,14 @@ export const ReservationCard = ({price,status,message,date_depart,date_arrive,id
     //for each reservation there is a car associated with it : 
     const getImageFromReservation = () => 
     {
-        let filteredreservation____ = reservations.filter((reservation) => reservation.id === id)
-        let filteredCars___ = cars.filter((car) => car.idcar === filteredreservation____[0].idcar)
-        if(filteredCars___[0] != undefined)
-            return filteredCars___[0].image;
+        if(reservations.length != 0){
+            console.log("this is the id : of reservation : " + id)
+            let filteredreservation____ = reservations.filter((reservation) => reservation.id == id)
+            console.log(filteredreservation____)
+            let filteredCars___ = cars.filter((car) => car.idcar == filteredreservation____[0].idcar)
+            if(filteredCars___[0] != undefined)
+                return filteredCars___[0].image;
+        }
     }
 
     const handleSubmit = () => 
