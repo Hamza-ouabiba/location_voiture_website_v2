@@ -261,14 +261,15 @@ function ReservationForm({data}) {
 
                 {modalIsOpen && 
                     <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={() => setModalIsOpen(false)}>
-                        <div className='flex flex-col justify-between h-full'>
+
+<h2 className='font-bold text-4xl underline text-cyan-500'>{data.model}</h2>
+                     <div className='flex flex-col justify-between h-full py-5'>
                         <div>
-                        <h2 className='font-bold text-4xl underline text-cyan-500'>{data.model}</h2>
                         <div className='text-green-600 mt-5 text-center'>{success ? 'Reservation sent to the agency view the my reservations sections in order to track your reservation' : ''}</div>
                         <div className='text-red-600 '>{errorForm ? formErrorMessage : ''}</div>
                             <div>
                             <div className='flex flex-row'>
-                                <div className='w-1/2 p-11 mx-11'>
+                                <div className='w-1/2  mx-24'>
                                 {reservationField.slice(0,userFields.length/2).map((field, index) => (
                                     <div key={index} className='mb-4'>
                                     <p className='text-md '>{field.label}:</p>
@@ -276,7 +277,7 @@ function ReservationForm({data}) {
                                     </div>
                                 ))}
                                 </div>
-                                <div className='w-1/2 p-8'>
+                                <div className='w-1/2 '>
                                 {reservationField.slice(userFields.length/2,userFields.length).map((field, index) => (
                                     <div key={index} className='mb-4'>
                                     <p className='text-md '>{field.label}:</p>
@@ -286,10 +287,9 @@ function ReservationForm({data}) {
                                 </div>
                             </div>
                             </div>
-                            <div className='pt-4'>
-                            <h3 className='font-bold'>Your credentials</h3>
+                            <div className=''>
                             <div className='flex flex-row'>
-                                <div className='w-1/2 p-8 mx-11'>
+                                <div className='w-1/2 mx-24'>
                                 {userFields.slice(0,userFields.length/2).map((field, index) => (
                                     <div key={index} className='mb-4'>
                                     <p className='text-md '>{field.label}:</p>
@@ -297,7 +297,7 @@ function ReservationForm({data}) {
                                     </div>
                                 ))}
                                 </div>
-                                <div className='w-1/2 p-11'>
+                                <div className='w-1/2 '>
                                 {userFields.slice(Math.ceil(userFields.length/2),userFields.length).map((field, index) => (
                                     <div key={index} className='mb-4'>
                                     <p className='text-md '>{field.label}:</p>

@@ -29,6 +29,7 @@ export default function Login({showPopup}) {
 
   const loginBtn = (event) => {
     event.preventDefault();
+    console.log(clients)
     let filterUsers = users.filter((user) => {
          return clients.some((client) => user.iduser === client.iduser)
     })

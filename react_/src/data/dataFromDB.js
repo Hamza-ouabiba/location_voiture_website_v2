@@ -61,7 +61,12 @@ export function Users() {
 
 
 export function Clients(){
-       return axios.get('http://localhost:8000/django_app/Client/')
+        const [data, setData] = useState([]);   
+        useEffect(() => {
+            axios.get(`http://localhost:8000/django_app/Client/`)
+            .then((res) => setData(res.data))
+        },[])
+        return data;
 }
 
 export default function Reservations(){
