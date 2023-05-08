@@ -18,9 +18,8 @@ export default function Navbar() {
 
   let links = [
     {name: 'Home',link: '/',button: false},
-    {name: 'Rent',link: '/rent',button: false},
     {name: 'Car',link: '/car',button: false},
-    {name: 'Profile',link: '/profile/ima',button: false},
+    // {name: 'Profile',link: '/profile/ima',button: false},
     {name: 'My reservations',link: '/myreservations',button: false},
     {name: token.myId ? "Logout" : "Login" ,link: window.location,button: true},
   ]
