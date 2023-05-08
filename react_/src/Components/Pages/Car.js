@@ -41,7 +41,7 @@ export default function Car() {
   };
 
 
-  function carsFilteredByPriceAndBrandAndFuel(cars, maxPrice, selectedBrand, selectedFuel, searchValue) {
+  function Filteredcars(cars, maxPrice, selectedBrand, selectedFuel, searchValue) {
     let filteredData = cars.filter((car) => car.price <= maxPrice);
     if (selectedBrand) {
       filteredData = filteredData.filter((car) => car.idmarque == selectedBrand);
@@ -77,11 +77,12 @@ export default function Car() {
         <div className=" my-4 mx-auto mt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {
-              carsFilteredByPriceAndBrandAndFuel(cars, maxPrice, selectedBrand, selectedFuel, searchValue).map((data, index) => {
+              Filteredcars(cars, maxPrice, selectedBrand, selectedFuel, searchValue).map((data, index) => {
                 console.log(data)
                 return (
                   <CarCard1
                     key={index}
+                    id={data.idcar}
                     image={data.image}
                     brand={brands.find((b) => b.idmarque == data.idmarque).nom}
                     model={data.model}

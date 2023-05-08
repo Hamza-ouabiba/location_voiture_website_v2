@@ -53,8 +53,8 @@ export const CarCard1 = ({ id, image, brand, model, price, year, fuel, gearbox }
                     <button className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold py-2 px-4 rounded">
                         Rent Now
                     </button>
-                    <Link className="  text-md text-blue-700 hover:text-blue-900" to={`/details/${id}`}>
-                        View Details
+                    <Link className="text-md text-blue-700 hover:text-blue-900 " to={`/details/${id}`}>
+                        view details
                     </Link>
                 </div>
             </div>
