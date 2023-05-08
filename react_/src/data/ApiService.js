@@ -42,7 +42,33 @@ export default class APISerive {
             },
             body: JSON.stringify(body)
         }).then(resp => resp.json())
+    }   
+
+    static addClient(body) {
+        return fetch(`http://localhost:8000/django_app/Client/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        }).then(resp => resp.json())
     }
 
+    static async RegisterClient(data) {
+        try {
+            console.log(data)
+            //inserting user : 
+            this.RegisterUser(data[0])
+            await new Promise(resolve => setTimeout(resolve, 2000));
+             //
+             const users = await axios.get('http://localhost:8000/django_app/Utilisateur/')
+             const lastId = users.data[users.data.length - 1].iduser;
+             data[1].iduser = lastId;
+             console.log(data[1]);
+             this.addClient(data[1]);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
 }

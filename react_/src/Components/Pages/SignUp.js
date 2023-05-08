@@ -1,118 +1,344 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
+import APISerive from '../../data/ApiService';
 
-function Signup() {
+export default function Signup() {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [license, setLicense] = useState(null);
+  const [address, setAddress] = useState('');
+  const [cin, setCin] = useState('');
+  const [photo, setPhoto] = useState('');
+  const [drivingLicense, setDrivingLicense] = useState('');
+  const [passport, setPassport] = useState('');
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState('');
+  const [phone, setPhone] = useState('');
+  const [licenseDate, setLicenseDate] = useState('');
+  const [terms, setTerms] = useState(false);
+
+
+  //erro message
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // handle form submission here
+
+  };
+
 
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    const emailInput = event.target.value;
+    const emailRegex = /^\S+@\S+\.\S+$/; // Regular expression for validating email format
+
+    if (!emailRegex.test(emailInput)) {
+      setErrorEmail("Please enter a valid email address.");
+    } else {
+      setErrorEmail(""); // Clear error message if email is valid
+    }
+
+    setEmail(emailInput);
+  };
+
+
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value);
+  };
+
+  const handleLoginChange = (event) => {
+    setLogin(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    if (!regex.test(event.target.value)) {
+      setErrorPassword('Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, and one number');
+    } else {
+      setErrorPassword(null);
+    }
   };
 
-  const handleLicenseChange = (event) => {
-    setLicense(event.target.files);
+
+  const handlePhoneChange = (event) => {
+    setPhone(event.target.files);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // TODO: Handle sign-up
+  const handleCinChange = (event) => {
+    setCin(event.target.value);
   };
 
-  return ( 
-    <div className="relative"> 
-    <div className="p-10 flex flex-col justify-center items-center h-screen fixed inset-0 bg-gray-800 bg-opacity-75">
-    <div className="sm:w-1/1 md:w-1/2 lg:w-1/4 p-10 rounded-xl  bg-white shadow-lg">
-        <h1 className="text-3xl font-bold mb-4 text-center">Sign Up</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="name" className="block font-medium mb-2">
-              Name:
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="border border-gray-400 p-2 rounded w-full"
-              value={name}
-              placeholder='Name'
-              onChange={handleNameChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block font-medium mb-2">
-              Email:
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="border border-gray-400 p-2 rounded w-full"
-              value={email}
-              placeholder='Email'
-              onChange={handleEmailChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block font-medium mb-2">
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder='password'
-              className="border border-gray-400 p-2 rounded w-full"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="license" className="block font-medium mb-2">
-              Driver's License:
-            </label>
-            <input
-              type="file"
-              id="license"
-              name="license"
-              className="border border-gray-400 p-2 rounded w-full"
-              accept="image/*"
-              onChange={handleLicenseChange}
-              required
-            />
-            <p className="text-sm text-gray-600 mt-2">
-              Please upload a photo of your driver's license.
-            </p>
-          </div>
-          <button
-            type="submit"
-            className="bg-gradient-to-r from-cyan-500 py-2 px-4 to-blue-600 cursor-pointer text-white rounded w-full"
-          >
-            Sign Up
-          </button>
-          <div className="mt-4 text-center">
-            Already a member?{' '} 
-            <a className="text-purple-700 underline">
-                <Link to="/login">Login</Link>
-            </a> 
-          </div>
-        </form>
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  };
+
+  const handleAdresseChange = (event) => {
+    setAddress(event.target.value);
+  };
+
+  const handleLicenseDateChange = (event) => {
+    setLicenseDate(event.target.files);
+  };
+
+  const handlePhotoChange = (event) => {
+    setPhoto(event.target.value);
+  };
+
+  const handleDrivingLicenseChange = (event) => {
+    setDrivingLicense(event.target.files);
+  };
+
+
+  const registerClient = () => {
+
+
+    let data = [
+      { nom: name, prenom: lastname, login: login, mdp: password },
+      {
+        iduser: null,
+        adresse: address,
+        cin: cin,
+        photo: "b'cl ent1.jpg'",
+        liste_noire: 0,
+        permis: "12c45",
+        passport: passport,
+        email: email,
+        observation: "Obscation 1",
+        societe: "Compc A",
+        ville: "CitcA",
+        tel: phone,
+        date_permis: "2000-01-01"
+      }
+    ]
+    APISerive.RegisterClient(data)
+  }
+
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col sm:max-w-md md:max-w-3xl mx-auto p-4 w-full mb-5">
+      <div className="flex flex-col md:flex-row justify-between">
+        <div className="mb-4 md:w-1/2 md:pr-2">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="nom">
+            Name:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            value={name}
+            placeholder='Name'
+            onChange={handleNameChange}
+          />
+        </div>
+        <div className="mb-4 md:w-1/2 md:pl-2">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="prenom">
+            Last Name:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            placeholder='Last Name'
+            value={lastname}
+            onChange={handleLastNameChange}
+          />
+        </div>
       </div>
-    </div>
-    </div>
-  );
-}
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2" >
+          Email:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="email"
+          value={email}
+          placeholder='Email'
+          onChange={handleEmailChange}
+        />
+        {errorEmail && (
+          <p className="text-red-500 text-md mt-4">{errorEmail}</p>
+        )}
+      </div>
 
-export default Signup;
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2" htmlFor="tel">
+          Phone:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+          type="tel"
+
+          value={phone}
+          placeholder='Phone number'
+          onChange={handlePhoneChange}
+        />
+      </div>
+      <div class="flex flex-col md:flex-row md:justify-between">
+        <div className="mb-4 md:w-1/2 md:pr-2">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="login">
+            Login:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+            type="text"
+            placeholder='username'
+            value={login}
+            onChange={handleLoginChange}
+          />
+        </div>
+        <div className="mb-4 md:w-1/2 md:pl-2">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="mdp">
+            Password:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+            type="password"
+            placeholder='password'
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          {errorPassword && (
+            <p className="text-red-500 text-md mt-4">{errorPassword}</p>
+          )}
+        </div>
+      </div>
+
+
+      <div class="flex flex-col md:flex-row md:justify-between">
+        <div className="mb-4 md:w-1/2 md:pr-2">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="cin">
+            Cin:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="cin"
+            type="text"
+            name="cin"
+            value={cin}
+            placeholder='cin'
+            onChange={handleCinChange}
+          />
+        </div>
+        <div className="mb-4 md:w-1/2 md:pl-2">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="adresse">
+            Adresse:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="address"
+            type="text"
+            name="adresse"
+            value={address}
+            placeholder='addresse'
+            onChange={handleAdresseChange}
+          />
+        </div>
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2" htmlFor="photo">
+          Photo:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="photo"
+          type="file"
+          name="photo"
+          value={photo}
+          placeholder='photo'
+          onChange={handlePhotoChange}
+        />
+      </div>
+      <div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="permis">
+            Driving License:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="drivingLicense"
+            type="text"
+            name="drivingLicense"
+            placeholder='Driving License'
+            value={drivingLicense}
+            onChange={handleDrivingLicenseChange}
+          />
+        </div>
+
+      </div>
+      <div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="ville">
+            City:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="city"
+            type="text"
+            name="city"
+            placeholder='city'
+            value={city}
+            onChange={handleCityChange}
+          />
+        </div>
+
+      </div>
+      <div>
+
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2" htmlFor="datePermis">
+          license Date:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="licenseDate"
+          type="date"
+          name="licenseDate"
+          value={licenseDate}
+          onChange={handleLicenseDateChange}
+
+        />
+      </div>
+      <div className="mb-4">
+        <label className="inline-flex items-center">
+          <input
+            className="form-checkbox"
+            type="checkbox"
+            name="terms"
+          />
+          <span className="ml-2">
+            I agree to the{' '}
+            <a href="#" className="text-blue-500">
+              terms and conditions
+            </a>
+          </span>
+        </label>
+      </div>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit"
+        onClick={registerClient}
+      >
+        Submit
+      </button>
+
+
+
+    </form >
+
+  )
+
+};
+
+
+
+
