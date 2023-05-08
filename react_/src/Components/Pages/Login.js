@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect ,useContext} from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
@@ -8,17 +8,18 @@ import { Clients, Users } from '../../data/dataFromDB'
 import { ReactDOM } from 'react';
 import AuthContext from '../AuthContext';
 
-export default function Login({ showPopup }) {
+export default function Login({showPopup}) {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const users = Users()
   const clients = Clients()
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [token, setToken] = useCookies(['mytoken'])
   let navigate = useNavigate()
   console.log(clients)
-  useEffect(() => {
+  useEffect(() => {   
     var user_token = token.myId
     console.log('Login User token is', user_token)
     console.log('Data type', typeof (token['myId']))
@@ -30,14 +31,14 @@ export default function Login({ showPopup }) {
     event.preventDefault();
     console.log(clients)
     let filterUsers = users.filter((user) => {
-      return clients.some((client) => user.iduser === client.iduser)
+         return clients.some((client) => user.iduser === client.iduser)
     })
     console.log(filterUsers)
     if (username && password) {
       //if the user is in black list he can not enter : 
       let user_valid = filterUsers.filter((user) => username === user.login && user.mdp === password /*&& user.liste_noire == 0*/)
-      if (user_valid.length > 0) {
-
+      if(user_valid.length>0) {
+        
         setToken('myId', user_valid[0].iduser);
         console.log('Login ...', user_valid[0].iduser);
         console.log("user is valid : ")
@@ -109,7 +110,7 @@ export default function Login({ showPopup }) {
               </a>
             </div>
             <div className="mt-4 text-center">
-
+              
             </div>
           </form>
         </div>
