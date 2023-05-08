@@ -27,6 +27,7 @@ export default function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // handle form submission here
+
   };
 
 
@@ -118,17 +119,6 @@ export default function Signup() {
       }
     ]
     APISerive.RegisterClient(data)
-      .then((response) => {
-        if (response.hasOwnProperty('non_field_errors')) {
-          if (response.non_field_errors[0] == "The fields idcar, iduser must make a unique set.") {
-
-            console.log(true)
-          }
-        } else {
-          console.log(false)
-        }
-      })
-      .catch((response) => console.log(response))
   }
 
 
