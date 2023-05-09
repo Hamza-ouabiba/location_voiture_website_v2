@@ -36,7 +36,7 @@ export default function Login({showPopup}) {
     console.log(filterUsers)
     if (username && password) {
       //if the user is in black list he can not enter : 
-      let user_valid = filterUsers.filter((user) => username === user.login && user.mdp === password /*&& user.liste_noire == 0*/)
+      let user_valid = filterUsers.filter((user) => username === user.login && user.mdp === password && user.liste_noire == 0)
       if(user_valid.length>0) {
         
         setToken('myId', user_valid[0].iduser);

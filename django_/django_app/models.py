@@ -39,8 +39,7 @@ class Client(models.Model):
 
 class Marque(models.Model):
     idmarque = models.AutoField(db_column='idMarque', primary_key=True)  # Field name made lowercase.
-    logo = models.IntegerField(blank=True, null=True)
-    nom = models.CharField(max_length=254, blank=True, null=True)
+    nom = models.CharField(db_column='nom',max_length=254, blank=True, null=True)
 
     class Meta:
         managed = True
@@ -88,6 +87,7 @@ class Voiture(models.Model):
     power = models.TextField(blank=True, null=True) 
     price = models.FloatField(blank=True,null=True)
     clients = models.ManyToManyField('Client', through='Reservation')
+    image_links = models.TextField(db_column="image_links",null=True)
 
     class Meta:
         managed = True
