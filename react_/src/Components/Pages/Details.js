@@ -14,6 +14,7 @@ export default function Details() {
     const [clickImage,setClickImage] = useState(false);
     const [carburant,setcarburant] = useState([])
     const [gearbox,setgearbox] = useState([])
+    const [carImages,setCarImages] = useState([])
     useEffect(() => {
         setClickImage(true)
     },[imageSliderIndex])
@@ -33,6 +34,8 @@ export default function Details() {
         .then((response) => 
             {
               setData(response.data)
+              console.log(JSON.parse(response.data.image_links))
+              setCarImages(JSON.parse(response.data.image_links))
               // console.log(response.data)
               let id_carburant = response.data.idcarburant
               let id_transmission = response.data.idTransmission
@@ -71,12 +74,12 @@ export default function Details() {
         </div>
         <div className='flex justify-between'>
               <div>
-                  <img src={cars[imageSliderIndex].url} className='rounded-sm max-w-5xl min-w-5xl '/>
+                  <img src={carImages[imageSliderIndex]} className='rounded-sm max-w-5xl min-w-5xl '/>
                   <div className='flex overflow-scroll h-52 max-w-5xl'>
                     {
-                      cars.map((car,index) => {
+                      carImages.map((car,index) => {
                           return(
-                              <img src={car.url} key={index} className={`rounded-md max-h-51 w-52 mt-5 mx-2 ${clickImage && imageSliderIndex == index ? ' border-solid border-4 border-cyan-500' : ''}`} onClick={() => setImageSliderIndex(index)} />
+                              <img src={car} key={index} className={`rounded-md max-h-51 w-52 mt-5 mx-2 ${clickImage && imageSliderIndex == index ? ' border-solid border-4 border-cyan-500' : ''}`} onClick={() => setImageSliderIndex(index)} />
                           )
                       })
                     }

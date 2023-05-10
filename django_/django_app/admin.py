@@ -8,7 +8,7 @@ class ClientAdmin(admin.ModelAdmin):
     list_display = ('iduser', 'adresse', 'cin', 'liste_noire', 'observation')
  
 class MarqueAdmin(admin.ModelAdmin):
-    list_display = ('idmarque', 'logo', 'nom')
+    list_display = ('idmarque', 'nom')
  
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ('iduser', 'idcar', 'date_depart', 'date_arr')

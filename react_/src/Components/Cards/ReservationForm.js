@@ -262,7 +262,7 @@ function ReservationForm({data}) {
                 {modalIsOpen && 
                     <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={() => setModalIsOpen(false)}>
 
-<h2 className='font-bold text-4xl underline text-cyan-500'>{data.model}</h2>
+                <h2 className='font-bold text-4xl underline text-cyan-500'>{data.model}</h2>
                      <div className='flex flex-col justify-between h-full py-5'>
                         <div>
                         <div className='text-green-600 mt-5 text-center'>{success ? 'Reservation sent to the agency view the my reservations sections in order to track your reservation' : ''}</div>

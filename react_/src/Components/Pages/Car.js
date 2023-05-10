@@ -90,6 +90,7 @@ export default function Car() {
                     year={2018}
                     fuel={fuels.find((b) => b.idcarburant == data.idcarburant).nom}
                     gearbox={gears.find((b) => b.id == data.idTransmission).type}
+                    id={data.idcar}
                   />
                 )
               })

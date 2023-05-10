@@ -16,6 +16,11 @@ export default function Navbar() {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
 
+  const handleLoginClick = () => {
+    console.log("hna")
+    setShowPopup(false);
+  };
+
   let links = [
     {name: 'Home',link: '/',button: false},
     {name: 'Car',link: '/car',button: false},
@@ -85,7 +90,7 @@ export default function Navbar() {
            }
         </div>
 
-         {showPopup&& <Login showPopup={showPopup}/>}
+         {showPopup&& <Login showPopup={showPopup} />}
     </>
      
   )
