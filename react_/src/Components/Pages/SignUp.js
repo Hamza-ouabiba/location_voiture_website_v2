@@ -108,14 +108,14 @@ export default function Signup() {
         cin: cin,
         photo: "b'cl ent1.jpg'",
         liste_noire: 0,
-        permis: "12c45",
+        permis: drivingLicense,
         passport: passport,
         email: email,
         observation: "Obscation 1",
         societe: "Compc A",
-        ville: "CitcA",
+        ville: city,
         tel: phone,
-        date_permis: "2000-01-01"
+        date_permis: licenseDate
       }
     ]
     APISerive.RegisterClient(data)
