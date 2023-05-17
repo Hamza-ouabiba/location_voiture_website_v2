@@ -19,14 +19,6 @@ export default function Details() {
         setClickImage(true)
     },[imageSliderIndex])
     //this cars array of objects will be replaced with the data retreived from database
-    const cars = [
-       {url: 'https://www.auto-data.net/images/f65/Audi-100-4A-C4.jpg '},
-       {url: 'https://www.auto-data.net/images/f113/Audi-100-4A-C4.jpg'},
-       {url: 'https://www.auto-data.net/images/f113/Audi-100-4A-C4.jpg'},
-       {url: 'https://www.auto-data.net/images/f113/Audi-100-4A-C4.jpg'},
-       {url: 'https://www.auto-data.net/images/f113/Audi-100-4A-C4.jpg'},
-       {url: 'https://www.auto-data.net/images/f113/Audi-100-4A-C4.jpg'},
-    ]
     
     useEffect(() => {
 
