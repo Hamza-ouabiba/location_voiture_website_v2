@@ -15,6 +15,7 @@ export default function Details() {
     const [carburant,setcarburant] = useState([])
     const [gearbox,setgearbox] = useState([])
     const [carImages,setCarImages] = useState([])
+    const [imageOne,setImageOne] = useState('')
     useEffect(() => {
         setClickImage(true)
     },[imageSliderIndex])
@@ -26,8 +27,11 @@ export default function Details() {
         .then((response) => 
             {
               setData(response.data)
-              console.log(JSON.parse(response.data.image_links))
-              setCarImages(JSON.parse(response.data.image_links))
+              console.log(response.data)
+              if(response.data.image_links != null)
+                setCarImages(JSON.parse(response.data.image_links))
+              else 
+                setImageOne(response.data.image)
               // console.log(response.data)
               let id_carburant = response.data.idcarburant
               let id_transmission = response.data.idTransmission
@@ -66,7 +70,7 @@ export default function Details() {
         </div>
         <div className='flex justify-between'>
               <div>
-                  <img src={carImages[imageSliderIndex]} className='rounded-sm max-w-5xl min-w-5xl '/>
+                  <img src={carImages.length != 0 ? carImages[imageSliderIndex]  : `data:image/png;base64,${imageOne}`} className='rounded-sm max-w-5xl min-w-5xl '/>
                   <div className='flex overflow-scroll h-52 max-w-5xl'>
                     {
                       carImages.map((car,index) => {
