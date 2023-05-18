@@ -68,10 +68,10 @@ export default function Details() {
               </div>
              
         </div>
-        <div className='flex justify-between'>
+        <div className='lg:flex justify-between'>
               <div>
-                  <img src={carImages.length != 0 ? carImages[imageSliderIndex]  : `data:image/png;base64,${imageOne}`} className='rounded-sm max-w-5xl min-w-5xl '/>
-                  <div className='flex overflow-scroll h-52 max-w-5xl'>
+                  <img src={carImages.length != 0 ? carImages[imageSliderIndex]  : `data:image/png;base64,${imageOne}`} className='lg:rounded-sm lg:max-w-5xl lg:min-w-5xl '/>
+                  <div className='flex overflow-scroll lg:h-52 lg:max-w-5xl'>
                     {
                       carImages.map((car,index) => {
                           return(
