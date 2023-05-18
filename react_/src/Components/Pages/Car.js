@@ -98,7 +98,7 @@ export default function Car() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {
               token.myId ? carsFilteredByPriceAndBrandAndFuel(cars, Price, selectedBrand, selectedFuel, searchValue).map((data, index) => {
-                console.log(data)
+                console.log(fuels)
 
                 return (
                   <CarCard
